@@ -41,8 +41,8 @@ def train_step(batch_size, ebno_min, ebno_max):
     
     with tf.GradientTape() as tape:
         # Forward pass
-        loss = model_train(batch_size, ebno)
-        
+        loss, _, _ = model_train(batch_size, ebno)
+
     # Backpropagation
     grads = tape.gradient(loss, model_train.trainable_weights)
     optimizer.apply_gradients(zip(grads, model_train.trainable_weights))

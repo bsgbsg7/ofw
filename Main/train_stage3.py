@@ -30,6 +30,7 @@ LEARNING_RATE = 0.0005
 NUM_ITERS = 10000
 
 weights_file_name = 'weights-qQ_Method'
+pretrained_weights_file_name = 'weights-qQ_Method_Stage2'
 
 model_train = qQ_MODEL(training=True)
 model_eval = qQ_MODEL(training=False)
@@ -37,10 +38,10 @@ model_eval(2, 40.0)
 
 # Load current best weights
 model_train(2, 40.0)
-with open(weights_file_name, 'rb') as f:
+with open(pretrained_weights_file_name, 'rb') as f:
     weights = pickle.load(f)
     model_train.set_weights(weights)
-print(f"Loaded weights from {weights_file_name}")
+print(f"Loaded weights from {pretrained_weights_file_name}")
 
 optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
 
@@ -48,10 +49,10 @@ optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
 def train_step(batch_size, ebno_min, ebno_max):
     ebno = tf.random.uniform([], ebno_min, ebno_max)
     with tf.GradientTape() as tape:
-        loss = model_train(batch_size, ebno)
-    grads = tape.gradient(loss, model_train.trainable_weights)
+        total_loss, par, bce_loss = model_train(batch_size, ebno)
+    grads = tape.gradient(total_loss, model_train.trainable_weights)
     optimizer.apply_gradients(zip(grads, model_train.trainable_weights))
-    return loss
+    return total_loss, par, bce_loss
 
 best_ber = 1.0
 patience_counter = 0
@@ -59,7 +60,7 @@ print(f"Stage 3: Extended fine-tuning for up to {NUM_ITERS} iterations")
 print(f"Batch size: {BATCH_SIZE * 256}, LR: {LEARNING_RATE}, SNR range: [10, 25]")
 
 for i in range(NUM_ITERS):
-    loss = train_step(
+    loss, par, bce = train_step(
         tf.constant(BATCH_SIZE * 256),
         tf.constant(float(EBN0_DB_MIN + 10)),
         tf.constant(float(EBN0_DB_MAX))
