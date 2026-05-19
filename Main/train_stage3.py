@@ -5,6 +5,7 @@ Lower LR, more iterations to push BER down further.
 import sys
 import pickle
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
 from src.qQ_Method.qQ_Model import qQ_MODEL
@@ -55,6 +56,9 @@ def train_step(batch_size, ebno_min, ebno_max):
 
 best_ber = 1.0
 patience_counter = 0
+metrics_file = 'metrics_stage3.csv'
+with open(metrics_file, 'w') as f:
+    f.write('iter,loss,eval_ber\n')
 print(f"Stage 3: Extended fine-tuning for up to {NUM_ITERS} iterations")
 print(f"Batch size: {BATCH_SIZE * 256}, LR: {LEARNING_RATE}, SNR range: [10, 25]")
 
@@ -74,6 +78,8 @@ for i in range(NUM_ITERS):
         avg_ber = total_ber / 5
 
         loss_val = float(loss)
+        with open(metrics_file, 'a') as f:
+            f.write(f'{i},{loss_val:.6E},{avg_ber:.6f}\n')
         print(f"  Iter {i}/{NUM_ITERS}  Loss: {loss_val:.4E}  Eval BER@20dB: {avg_ber:.5f}", flush=True)
 
         if avg_ber < best_ber:
@@ -86,8 +92,8 @@ for i in range(NUM_ITERS):
         else:
             patience_counter += 1
 
-        if patience_counter >= 20:
-            print(f"Early stopping at iter {i}, best BER: {best_ber:.5f}")
-            break
+        # if patience_counter >= 20:
+        #     print(f"Early stopping at iter {i}, best BER: {best_ber:.5f}")
+        #     break
 
 print(f"Stage 3 complete. Best BER@20dB: {best_ber:.5f}")

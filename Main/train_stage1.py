@@ -4,6 +4,7 @@ Stage 1: Train qQ model from scratch with BER-based checkpointing.
 import sys
 import pickle
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
 from src.qQ_Method.qQ_Model import qQ_MODEL
@@ -46,6 +47,9 @@ def train_step(batch_size, ebno_min, ebno_max):
 
 best_ber = 1.0
 patience_counter = 0
+metrics_file = 'metrics_stage1.csv'
+with open(metrics_file, 'w') as f:
+    f.write('iter,loss,eval_ber\n')
 print(f"Stage 1: Training from scratch for up to {NUM_ITERS} iterations")
 print(f"Batch size: {BATCH_SIZE * 256}, LR: {LEARNING_RATE}, SNR range: [{EBN0_DB_MIN+10}, {EBN0_DB_MAX}]")
 
@@ -66,6 +70,8 @@ for i in range(NUM_ITERS):
         avg_ber = total_ber / 5
 
         loss_val = float(loss)
+        with open(metrics_file, 'a') as f:
+            f.write(f'{i},{loss_val:.6E},{avg_ber:.6f}\n')
         print(f"  Iter {i}/{NUM_ITERS}  Loss: {loss_val:.4E}  Eval BER@20dB: {avg_ber:.4f}")
 
         if avg_ber < best_ber:

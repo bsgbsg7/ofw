@@ -215,9 +215,9 @@ class qQ_MODEL(keras.Model):
                                         tf.exp(-log_sigma_bce) * bce_loss + tf.exp(-log_sigma_par) * PAR + tf.exp(-log_sigma_par_lim) * par_lim + log_sigma_bce + log_sigma_par + log_sigma_par_lim
                                         )
             # log
-            self.training_log(total_loss=total_loss,
-                                bce_loss=tf.reduce_mean(bce_loss),
-                                PAR=tf.reduce_mean(PAR), llr=llr, bits=b)
+            # self.training_log(total_loss=total_loss,
+            #                     bce_loss=tf.reduce_mean(bce_loss),
+            #                     PAR=tf.reduce_mean(PAR), llr=llr, bits=b)
             # visualize           
             if self.visulaize_progress:
                 self.visulaize(h_freq, Q, rms_ds, tf.exp(-log_sigma_bce), tf.exp(-log_sigma_par))

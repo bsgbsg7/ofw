@@ -6,6 +6,7 @@ Uses smaller effective block (single symbol), lower LR, higher SNR.
 import sys
 import pickle
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
 from src.qQ_Method.qQ_Model import qQ_MODEL
@@ -28,7 +29,7 @@ if gpus:
 
 # Training Param - Stage 2: fine-tune with higher SNR
 LEARNING_RATE = 0.0001
-NUM_ITERS = 2000
+NUM_ITERS = 4000
 
 # Weights file name to save
 weights_file_name = 'weights-qQ_Method'
@@ -48,6 +49,9 @@ print(f"Loaded pretrained weights from {pretrained_weights_file_name}")
 optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
 
 best_loss = np.inf
+metrics_file = 'metrics_stage2.csv'
+with open(metrics_file, 'w') as f:
+    f.write('iter,loss\n')
 print(f"Stage 2: Fine-tuning for {NUM_ITERS} iterations")
 print(f"Batch size: {BATCH_SIZE * 256}, LR: {LEARNING_RATE}, SNR range: [20, 25]")
 
@@ -59,6 +63,8 @@ for i in range(NUM_ITERS):
 
     if i % 50 == 0:
         loss_val = float(loss)
+        with open(metrics_file, 'a') as f:
+            f.write(f'{i},{loss_val:.6E}\n')
         print(f"  Iter {i}/{NUM_ITERS}  Loss: {loss_val:.4E}")
         if loss_val < best_loss:
             weights = model_train.get_weights()
