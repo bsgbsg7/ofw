@@ -116,50 +116,29 @@ class qQ_MODEL_TV(keras.Model):
                                      l_min=self._l_min, l_max=self._l_max, normalize=True)
 
         ## Q creation — extract MULTI-SNAPSHOT CIR to capture time-variation ##
-        # Send delta pulse and observe CIR at each OFDM symbol position
-        x_time_for_csi = x_rg[:, :, :, 0, :]
-        delta = tf.tile(
-            tf.reshape(tf.complex(tf.one_hot(0, self._fft_size, dtype=tf.float32),
-                                  tf.zeros(self._fft_size, dtype=tf.float32)),
-                       [1, 1, 1, self._fft_size]),
-            [tf.shape(x_rg)[0], 1, 1, 1]
-        )
-        diff = tf.shape(self.OFDM_modulator(x_rg))[-1] - tf.shape(x_time_for_csi)[-1]
-        paddings = tf.stack([[0, 0], [0, 0], [0, 0], tf.stack([0, diff])])
-        delta_padded = tf.pad(delta, paddings, mode='CONSTANT', constant_values=tf.complex(0.0, 0.0))
-        y_time_csi = self._channel_time(delta_padded, h_time, 0)
-        y_time_csi = y_time_csi[..., -self._l_min:-self._l_max]
-
-        # Extract CIR at multiple time positions (each OFDM symbol boundary)
-        # This captures how the channel evolves over time → Doppler information
+        # h_time shape: (batch, 1, 1, 1, 1, num_time_steps, l_tot)
+        # Sample CIR at different OFDM symbol positions to observe Doppler
         symbol_len = self._fft_size + self._cyclic_prefix_length
         num_snapshots = self._num_ofdm_symbols
         cir_snapshots = []
         for sym_idx in range(num_snapshots):
-            start = sym_idx * symbol_len + self._cyclic_prefix_length
-            snapshot = y_time_csi[:, 0, 0, start:start + self._l_max]
+            t_idx = sym_idx * symbol_len + self._cyclic_prefix_length
+            snapshot = h_time[:, 0, 0, 0, 0, t_idx, :]  # (batch, l_tot)
             cir_snapshots.append(snapshot)
 
-        # Stack: (batch, l_max, num_snapshots) — 2D delay-time representation
+        # Stack: (batch, l_tot, num_snapshots) — 2D delay-time representation
         pilots_post_channel = tf.stack(cir_snapshots, axis=-1)
 
-        # Compute a "Doppler spread" metric for uncertainty networks
-        # Variance of CIR across time snapshots indicates Doppler
-        h_power = tf.square(tf.abs(pilots_post_channel))
-        # Time variance per delay tap
-        time_var = tf.math.reduce_variance(h_power, axis=-1)
-        doppler_metric = tf.reduce_mean(time_var, axis=-1, keepdims=True)
-        # Also compute delay spread (RMS)
-        h_avg = tf.reduce_mean(pilots_post_channel, axis=-1)
-        delays = tf.range(tf.shape(h_avg)[1], dtype=tf.float32)
-        power = tf.square(tf.abs(h_avg))
-        mean_delay = tf.reduce_sum(delays * power, axis=-1) / (tf.reduce_sum(power, axis=-1) + 1e-10)
+        # Compute RMS delay spread from first snapshot for uncertainty networks
+        h_first = pilots_post_channel[:, :, 0]  # (batch, l_tot)
+        delays = tf.cast(tf.range(tf.shape(h_first)[1]), tf.float32)
+        power = tf.square(tf.abs(h_first))
+        total_power = tf.reduce_sum(power, axis=-1, keepdims=True) + 1e-10
+        mean_delay = tf.reduce_sum(delays[None, :] * power, axis=-1, keepdims=True) / total_power
         rms_ds = tf.sqrt(
-            tf.reduce_sum(power * tf.square(delays - mean_delay[:, None]), axis=-1)
-            / (tf.reduce_sum(power, axis=-1) + 1e-10)
+            tf.reduce_sum(power * tf.square(delays[None, :] - mean_delay), axis=-1)
+            / tf.squeeze(total_power, -1)
         )
-        # Combined feature: delay spread + doppler metric
-        channel_feature = tf.concat([tf.expand_dims(rms_ds, -1), doppler_metric], axis=-1)
 
         Q, q = self._qQ_creator_layer(pilots_post_channel, training=self.training)
 
@@ -168,7 +147,7 @@ class qQ_MODEL_TV(keras.Model):
 
         # CCDF Mode
         if self.CCDF_mode:
-            return x_time[:, 0, 0, :], channel_feature
+            return x_time[:, 0, 0, :], tf.expand_dims(rms_ds, -1)
 
         # Channel (with Doppler)
         y_time = self._channel_time(x_time, h_time, no)
