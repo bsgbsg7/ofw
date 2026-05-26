@@ -1,0 +1,390 @@
+[2026-05-19 14:49:40] Python: /home/shizheng/miniconda3/envs/ofw/bin/python
+2026-05-19 14:49:41.068832: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-05-19 14:49:41.068863: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-19 14:49:41.069993: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-05-19 14:49:41.074854: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-19 14:49:41.575449: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2026-05-19 14:49:42.028834: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:42.029035: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:42.078921: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:42.079157: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:42.079338: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:42.079507: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+[2026-05-19 14:49:42] TF visible GPUs: 2
+[2026-05-19 14:49:42] ========== Starting train_stage1 ==========
+2026-05-19 14:49:42.683065: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-05-19 14:49:42.683095: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-19 14:49:42.684216: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-05-19 14:49:42.689084: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-19 14:49:43.207706: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2026-05-19 14:49:43.961443: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.011579: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.011822: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.013506: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.013710: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.013895: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.075488: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.075691: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.075868: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 14:49:44.076016: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1929] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 30192 MB memory:  -> device: 0, name: NVIDIA RTX A6000, pci bus id: 0000:2e:00.0, compute capability: 8.6
+2026-05-19 14:49:46.375537: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:454] Loaded cuDNN version 8907
+2026-05-19 14:49:57.200665: I external/local_xla/xla/service/service.cc:168] XLA service 0x7e6bd83e5ce0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2026-05-19 14:49:57.200694: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA RTX A6000, Compute Capability 8.6
+2026-05-19 14:49:57.210238: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779216597.291581 2791175 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+Stage 1: Training from scratch for up to 5000 iterations
+Batch size: 2560, LR: 0.001, SNR range: [10, 25]
+  Iter 0/5000  Loss: 1.5113E+03  Eval BER@20dB: 0.4653
+    -> Saved best weights (BER=0.4653)
+  Iter 100/5000  Loss: 7.3681E+00  Eval BER@20dB: 0.4393
+    -> Saved best weights (BER=0.4393)
+  Iter 200/5000  Loss: 6.6591E+00  Eval BER@20dB: 0.3819
+    -> Saved best weights (BER=0.3819)
+  Iter 300/5000  Loss: 2.5219E+01  Eval BER@20dB: 0.3452
+    -> Saved best weights (BER=0.3452)
+  Iter 400/5000  Loss: 6.3244E+00  Eval BER@20dB: 0.3240
+    -> Saved best weights (BER=0.3240)
+  Iter 500/5000  Loss: 6.4628E+00  Eval BER@20dB: 0.3064
+    -> Saved best weights (BER=0.3064)
+  Iter 600/5000  Loss: 1.8481E+00  Eval BER@20dB: 0.2331
+    -> Saved best weights (BER=0.2331)
+  Iter 700/5000  Loss: 2.0483E+00  Eval BER@20dB: 0.1823
+    -> Saved best weights (BER=0.1823)
+  Iter 800/5000  Loss: 1.6168E+00  Eval BER@20dB: 0.1552
+    -> Saved best weights (BER=0.1552)
+  Iter 900/5000  Loss: 2.4314E+00  Eval BER@20dB: 0.1481
+    -> Saved best weights (BER=0.1481)
+  Iter 1000/5000  Loss: 4.0683E+00  Eval BER@20dB: 0.1476
+    -> Saved best weights (BER=0.1476)
+  Iter 1100/5000  Loss: 4.0975E+00  Eval BER@20dB: 0.1541
+  Iter 1200/5000  Loss: 1.3759E+00  Eval BER@20dB: 0.1523
+  Iter 1300/5000  Loss: 2.2811E+00  Eval BER@20dB: 0.1521
+  Iter 1400/5000  Loss: 7.2104E-01  Eval BER@20dB: 0.1482
+  Iter 1500/5000  Loss: 3.7511E+00  Eval BER@20dB: 0.1456
+    -> Saved best weights (BER=0.1456)
+  Iter 1600/5000  Loss: 8.3259E-01  Eval BER@20dB: 0.1535
+  Iter 1700/5000  Loss: -4.9031E-01  Eval BER@20dB: 0.1606
+  Iter 1800/5000  Loss: 6.9016E-02  Eval BER@20dB: 0.1864
+  Iter 1900/5000  Loss: 8.4123E+00  Eval BER@20dB: 0.4341
+  Iter 2000/5000  Loss: 2.9909E+00  Eval BER@20dB: 0.4154
+  Iter 2100/5000  Loss: 1.6244E+00  Eval BER@20dB: 0.3472
+  Iter 2200/5000  Loss: 1.1057E+01  Eval BER@20dB: 0.3042
+  Iter 2300/5000  Loss: -5.6052E-01  Eval BER@20dB: 0.2789
+  Iter 2400/5000  Loss: 1.2127E+00  Eval BER@20dB: 0.2457
+  Iter 2500/5000  Loss: -1.7746E+00  Eval BER@20dB: 0.2394
+  Iter 2600/5000  Loss: -3.1881E+00  Eval BER@20dB: 0.2215
+  Iter 2700/5000  Loss: 1.1252E+00  Eval BER@20dB: 0.2230
+  Iter 2800/5000  Loss: -3.8285E+00  Eval BER@20dB: 0.2244
+  Iter 2900/5000  Loss: -2.9713E+00  Eval BER@20dB: 0.2190
+  Iter 3000/5000  Loss: -4.3463E+00  Eval BER@20dB: 0.2099
+Early stopping at iter 3000, best BER: 0.1456
+Stage 1 complete. Best BER@20dB: 0.1456
+Weights saved to: weights-qQ_Method_initial
+[2026-05-19 15:04:03] ========== train_stage1 completed ==========
+[2026-05-19 15:04:03] ========== Starting train_stage2 ==========
+2026-05-19 15:04:03.757649: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-05-19 15:04:03.757680: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-19 15:04:03.758659: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-05-19 15:04:03.763519: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-19 15:04:04.276016: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2026-05-19 15:04:05.052736: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.105682: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.105918: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.107833: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.108024: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.108191: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.210097: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.210299: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.210481: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:04:05.210628: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1929] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 28833 MB memory:  -> device: 0, name: NVIDIA RTX A6000, pci bus id: 0000:2e:00.0, compute capability: 8.6
+2026-05-19 15:04:07.834616: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:454] Loaded cuDNN version 8907
+2026-05-19 15:04:13.232390: I external/local_xla/xla/service/service.cc:168] XLA service 0x59b166704270 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2026-05-19 15:04:13.232413: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA RTX A6000, Compute Capability 8.6
+2026-05-19 15:04:13.235425: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779217453.306107 2826887 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+Loaded pretrained weights from weights-qQ_Method_initial
+Stage 2: Fine-tuning for 4000 iterations
+Batch size: 2560, LR: 0.0001, SNR range: [20, 25]
+  Iter 0/4000  Loss: 5.1572E+00
+    -> Saved best weights (loss=5.1572E+00)
+  Iter 50/4000  Loss: 8.2333E-01
+    -> Saved best weights (loss=8.2333E-01)
+  Iter 100/4000  Loss: 4.9906E-01
+    -> Saved best weights (loss=4.9906E-01)
+  Iter 150/4000  Loss: 2.6733E-01
+    -> Saved best weights (loss=2.6733E-01)
+  Iter 200/4000  Loss: -5.8143E-01
+    -> Saved best weights (loss=-5.8143E-01)
+  Iter 250/4000  Loss: -1.6501E+00
+    -> Saved best weights (loss=-1.6501E+00)
+  Iter 300/4000  Loss: -1.8803E+00
+    -> Saved best weights (loss=-1.8803E+00)
+  Iter 350/4000  Loss: -2.5459E+00
+    -> Saved best weights (loss=-2.5459E+00)
+  Iter 400/4000  Loss: -2.7787E+00
+    -> Saved best weights (loss=-2.7787E+00)
+  Iter 450/4000  Loss: -2.3460E+00
+  Iter 500/4000  Loss: -2.7589E+00
+  Iter 550/4000  Loss: -3.1362E+00
+    -> Saved best weights (loss=-3.1362E+00)
+  Iter 600/4000  Loss: -3.0752E+00
+  Iter 650/4000  Loss: -2.8219E+00
+  Iter 700/4000  Loss: -3.6710E+00
+    -> Saved best weights (loss=-3.6710E+00)
+  Iter 750/4000  Loss: -3.7356E+00
+    -> Saved best weights (loss=-3.7356E+00)
+  Iter 800/4000  Loss: -3.4029E+00
+  Iter 850/4000  Loss: -3.8726E+00
+    -> Saved best weights (loss=-3.8726E+00)
+  Iter 900/4000  Loss: -3.5772E+00
+  Iter 950/4000  Loss: -3.3628E+00
+  Iter 1000/4000  Loss: -3.3359E+00
+  Iter 1050/4000  Loss: -2.9757E+00
+  Iter 1100/4000  Loss: -3.4735E+00
+  Iter 1150/4000  Loss: -3.8509E+00
+  Iter 1200/4000  Loss: -4.1154E+00
+    -> Saved best weights (loss=-4.1154E+00)
+  Iter 1250/4000  Loss: -4.2267E+00
+    -> Saved best weights (loss=-4.2267E+00)
+  Iter 1300/4000  Loss: -3.9111E+00
+  Iter 1350/4000  Loss: -4.0064E+00
+  Iter 1400/4000  Loss: -4.0564E+00
+  Iter 1450/4000  Loss: -3.9506E+00
+  Iter 1500/4000  Loss: -4.5106E+00
+    -> Saved best weights (loss=-4.5106E+00)
+  Iter 1550/4000  Loss: -4.4595E+00
+  Iter 1600/4000  Loss: -4.2997E+00
+  Iter 1650/4000  Loss: -4.2990E+00
+  Iter 1700/4000  Loss: -3.9090E+00
+  Iter 1750/4000  Loss: -3.8964E+00
+  Iter 1800/4000  Loss: -4.4147E+00
+  Iter 1850/4000  Loss: -4.0967E+00
+  Iter 1900/4000  Loss: -4.3510E+00
+  Iter 1950/4000  Loss: -4.3009E+00
+  Iter 2000/4000  Loss: -4.5289E+00
+    -> Saved best weights (loss=-4.5289E+00)
+  Iter 2050/4000  Loss: -4.4378E+00
+  Iter 2100/4000  Loss: -4.7294E+00
+    -> Saved best weights (loss=-4.7294E+00)
+  Iter 2150/4000  Loss: -3.9129E+00
+  Iter 2200/4000  Loss: -4.1183E+00
+  Iter 2250/4000  Loss: -4.4368E+00
+  Iter 2300/4000  Loss: -4.7161E+00
+  Iter 2350/4000  Loss: -4.0543E+00
+  Iter 2400/4000  Loss: -4.2231E+00
+  Iter 2450/4000  Loss: -4.3673E+00
+  Iter 2500/4000  Loss: -4.5627E+00
+  Iter 2550/4000  Loss: -4.4271E+00
+  Iter 2600/4000  Loss: -4.8156E+00
+    -> Saved best weights (loss=-4.8156E+00)
+  Iter 2650/4000  Loss: -4.7182E+00
+  Iter 2700/4000  Loss: -4.9411E+00
+    -> Saved best weights (loss=-4.9411E+00)
+  Iter 2750/4000  Loss: -4.2065E+00
+  Iter 2800/4000  Loss: -4.9685E+00
+    -> Saved best weights (loss=-4.9685E+00)
+  Iter 2850/4000  Loss: -4.7240E+00
+  Iter 2900/4000  Loss: -4.9714E+00
+    -> Saved best weights (loss=-4.9714E+00)
+  Iter 2950/4000  Loss: -4.1817E+00
+  Iter 3000/4000  Loss: -4.7544E+00
+  Iter 3050/4000  Loss: -4.9779E+00
+    -> Saved best weights (loss=-4.9779E+00)
+  Iter 3100/4000  Loss: -4.9714E+00
+  Iter 3150/4000  Loss: -4.8909E+00
+  Iter 3200/4000  Loss: -4.3695E+00
+  Iter 3250/4000  Loss: -4.9425E+00
+  Iter 3300/4000  Loss: -4.6085E+00
+  Iter 3350/4000  Loss: -4.3090E+00
+  Iter 3400/4000  Loss: -4.6955E+00
+  Iter 3450/4000  Loss: -4.2171E+00
+  Iter 3500/4000  Loss: -4.9026E+00
+  Iter 3550/4000  Loss: -4.8501E+00
+  Iter 3600/4000  Loss: -4.9239E+00
+  Iter 3650/4000  Loss: -5.0399E+00
+    -> Saved best weights (loss=-5.0399E+00)
+  Iter 3700/4000  Loss: -4.4252E+00
+  Iter 3750/4000  Loss: -5.0563E+00
+    -> Saved best weights (loss=-5.0563E+00)
+  Iter 3800/4000  Loss: -4.7605E+00
+  Iter 3850/4000  Loss: -5.1201E+00
+    -> Saved best weights (loss=-5.1201E+00)
+  Iter 3900/4000  Loss: -3.8578E+00
+  Iter 3950/4000  Loss: -4.7479E+00
+Stage 2 complete. Best loss: -5.1201E+00
+Weights saved to: weights-qQ_Method
+[2026-05-19 15:35:45] ========== train_stage2 completed ==========
+[2026-05-19 15:35:45] ========== Starting train_stage3 ==========
+2026-05-19 15:35:45.679491: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-05-19 15:35:45.679518: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-19 15:35:45.680504: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-05-19 15:35:45.685083: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-19 15:35:46.211373: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2026-05-19 15:35:46.976495: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.031273: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.031528: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.033596: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.033793: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.033966: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.127061: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.127270: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.127456: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-05-19 15:35:47.127605: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1929] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 28832 MB memory:  -> device: 0, name: NVIDIA RTX A6000, pci bus id: 0000:2e:00.0, compute capability: 8.6
+2026-05-19 15:35:49.240950: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:454] Loaded cuDNN version 8907
+2026-05-19 15:36:00.345134: I external/local_xla/xla/service/service.cc:168] XLA service 0x70e2b82353e0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2026-05-19 15:36:00.345164: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA RTX A6000, Compute Capability 8.6
+2026-05-19 15:36:00.350682: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779219360.428011 2894697 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+Loaded weights from weights-qQ_Method
+Stage 3: Extended fine-tuning for up to 20000 iterations
+Batch size: 2560, LR: 0.0005, SNR range: [10, 25]
+  Iter 0/20000  Loss: -4.7765E+00  Eval BER@20dB: 0.18053
+    -> Saved best weights (BER=0.18053)
+  Iter 200/20000  Loss: -5.1445E+00  Eval BER@20dB: 0.12929
+    -> Saved best weights (BER=0.12929)
+  Iter 400/20000  Loss: 1.2919E+00  Eval BER@20dB: 0.21774
+  Iter 600/20000  Loss: -4.5209E+00  Eval BER@20dB: 0.16327
+  Iter 800/20000  Loss: -4.6489E+00  Eval BER@20dB: 0.14861
+  Iter 1000/20000  Loss: -5.0751E+00  Eval BER@20dB: 0.15284
+  Iter 1200/20000  Loss: -4.8426E+00  Eval BER@20dB: 0.15117
+  Iter 1400/20000  Loss: -4.3460E+00  Eval BER@20dB: 0.14927
+  Iter 1600/20000  Loss: -4.1258E+00  Eval BER@20dB: 0.15480
+  Iter 1800/20000  Loss: -4.8817E+00  Eval BER@20dB: 0.15108
+  Iter 2000/20000  Loss: -5.7013E+00  Eval BER@20dB: 0.14456
+  Iter 2200/20000  Loss: -5.1936E+00  Eval BER@20dB: 0.14115
+  Iter 2400/20000  Loss: -4.9533E+00  Eval BER@20dB: 0.14418
+  Iter 2600/20000  Loss: -3.7446E+00  Eval BER@20dB: 0.13290
+  Iter 2800/20000  Loss: -5.3621E+00  Eval BER@20dB: 0.12780
+    -> Saved best weights (BER=0.12780)
+  Iter 3000/20000  Loss: -5.7773E+00  Eval BER@20dB: 0.12505
+    -> Saved best weights (BER=0.12505)
+  Iter 3200/20000  Loss: -5.5369E+00  Eval BER@20dB: 0.12066
+    -> Saved best weights (BER=0.12066)
+  Iter 3400/20000  Loss: -5.2356E+00  Eval BER@20dB: 0.11139
+    -> Saved best weights (BER=0.11139)
+  Iter 3600/20000  Loss: -4.5648E+00  Eval BER@20dB: 0.11418
+  Iter 3800/20000  Loss: -6.1084E+00  Eval BER@20dB: 0.10448
+    -> Saved best weights (BER=0.10448)
+  Iter 4000/20000  Loss: -5.2524E+00  Eval BER@20dB: 0.10471
+  Iter 4200/20000  Loss: -5.6175E+00  Eval BER@20dB: 0.10365
+    -> Saved best weights (BER=0.10365)
+  Iter 4400/20000  Loss: -6.1791E+00  Eval BER@20dB: 0.10139
+    -> Saved best weights (BER=0.10139)
+  Iter 4600/20000  Loss: -6.0816E+00  Eval BER@20dB: 0.09304
+    -> Saved best weights (BER=0.09304)
+  Iter 4800/20000  Loss: -5.4506E+00  Eval BER@20dB: 0.09240
+    -> Saved best weights (BER=0.09240)
+  Iter 5000/20000  Loss: -4.8081E+00  Eval BER@20dB: 0.09156
+    -> Saved best weights (BER=0.09156)
+  Iter 5200/20000  Loss: -5.2924E+00  Eval BER@20dB: 0.08921
+    -> Saved best weights (BER=0.08921)
+  Iter 5400/20000  Loss: -6.3630E+00  Eval BER@20dB: 0.08690
+    -> Saved best weights (BER=0.08690)
+  Iter 5600/20000  Loss: -6.2968E+00  Eval BER@20dB: 0.07924
+    -> Saved best weights (BER=0.07924)
+  Iter 5800/20000  Loss: -6.5247E+00  Eval BER@20dB: 0.07966
+  Iter 6000/20000  Loss: -6.1478E+00  Eval BER@20dB: 0.08094
+  Iter 6200/20000  Loss: -6.5734E+00  Eval BER@20dB: 0.07696
+    -> Saved best weights (BER=0.07696)
+  Iter 6400/20000  Loss: -6.1897E+00  Eval BER@20dB: 0.07392
+    -> Saved best weights (BER=0.07392)
+  Iter 6600/20000  Loss: -6.2706E+00  Eval BER@20dB: 0.06996
+    -> Saved best weights (BER=0.06996)
+  Iter 6800/20000  Loss: -6.6518E+00  Eval BER@20dB: 0.07063
+  Iter 7000/20000  Loss: -6.6056E+00  Eval BER@20dB: 0.06516
+    -> Saved best weights (BER=0.06516)
+  Iter 7200/20000  Loss: -6.0314E+00  Eval BER@20dB: 0.06603
+  Iter 7400/20000  Loss: -6.5265E+00  Eval BER@20dB: 0.06242
+    -> Saved best weights (BER=0.06242)
+  Iter 7600/20000  Loss: -6.6919E+00  Eval BER@20dB: 0.06485
+  Iter 7800/20000  Loss: -6.5510E+00  Eval BER@20dB: 0.05830
+    -> Saved best weights (BER=0.05830)
+  Iter 8000/20000  Loss: -6.2520E+00  Eval BER@20dB: 0.06257
+  Iter 8200/20000  Loss: -6.7977E+00  Eval BER@20dB: 0.05891
+  Iter 8400/20000  Loss: -6.1495E+00  Eval BER@20dB: 0.05260
+    -> Saved best weights (BER=0.05260)
+  Iter 8600/20000  Loss: -6.8863E+00  Eval BER@20dB: 0.05090
+    -> Saved best weights (BER=0.05090)
+  Iter 8800/20000  Loss: -6.5103E+00  Eval BER@20dB: 0.05326
+  Iter 9000/20000  Loss: -5.6402E+00  Eval BER@20dB: 0.08513
+  Iter 9200/20000  Loss: -6.3620E+00  Eval BER@20dB: 0.06218
+  Iter 9400/20000  Loss: -6.8930E+00  Eval BER@20dB: 0.05271
+  Iter 9600/20000  Loss: -7.0790E+00  Eval BER@20dB: 0.04956
+    -> Saved best weights (BER=0.04956)
+  Iter 9800/20000  Loss: -7.1337E+00  Eval BER@20dB: 0.04483
+    -> Saved best weights (BER=0.04483)
+  Iter 10000/20000  Loss: -6.7052E+00  Eval BER@20dB: 0.04789
+  Iter 10200/20000  Loss: -7.2144E+00  Eval BER@20dB: 0.03878
+    -> Saved best weights (BER=0.03878)
+  Iter 10400/20000  Loss: -7.1082E+00  Eval BER@20dB: 0.04712
+  Iter 10600/20000  Loss: -7.1018E+00  Eval BER@20dB: 0.04127
+  Iter 10800/20000  Loss: -6.9223E+00  Eval BER@20dB: 0.04347
+  Iter 11000/20000  Loss: -6.2587E+00  Eval BER@20dB: 0.03817
+    -> Saved best weights (BER=0.03817)
+  Iter 11200/20000  Loss: -7.2795E+00  Eval BER@20dB: 0.03917
+  Iter 11400/20000  Loss: -6.4074E+00  Eval BER@20dB: 0.03555
+    -> Saved best weights (BER=0.03555)
+  Iter 11600/20000  Loss: -7.2018E+00  Eval BER@20dB: 0.03625
+  Iter 11800/20000  Loss: -6.9379E+00  Eval BER@20dB: 0.03750
+  Iter 12000/20000  Loss: -7.0903E+00  Eval BER@20dB: 0.03459
+    -> Saved best weights (BER=0.03459)
+  Iter 12200/20000  Loss: -5.5710E+00  Eval BER@20dB: 0.03438
+    -> Saved best weights (BER=0.03438)
+  Iter 12400/20000  Loss: -6.9834E+00  Eval BER@20dB: 0.03324
+    -> Saved best weights (BER=0.03324)
+  Iter 12600/20000  Loss: -5.7290E+00  Eval BER@20dB: 0.03122
+    -> Saved best weights (BER=0.03122)
+  Iter 12800/20000  Loss: -7.4248E+00  Eval BER@20dB: 0.03195
+  Iter 13000/20000  Loss: -7.5441E+00  Eval BER@20dB: 0.03145
+  Iter 13200/20000  Loss: -7.5271E+00  Eval BER@20dB: 0.03440
+  Iter 13400/20000  Loss: -7.3412E+00  Eval BER@20dB: 0.03076
+    -> Saved best weights (BER=0.03076)
+  Iter 13600/20000  Loss: -6.8495E+00  Eval BER@20dB: 0.02638
+    -> Saved best weights (BER=0.02638)
+  Iter 13800/20000  Loss: -7.4216E+00  Eval BER@20dB: 0.02808
+  Iter 14000/20000  Loss: -7.0076E+00  Eval BER@20dB: 0.03132
+  Iter 14200/20000  Loss: -6.3350E+00  Eval BER@20dB: 0.02625
+    -> Saved best weights (BER=0.02625)
+  Iter 14400/20000  Loss: -7.0598E+00  Eval BER@20dB: 0.02737
+  Iter 14600/20000  Loss: -6.6510E+00  Eval BER@20dB: 0.04126
+  Iter 14800/20000  Loss: -7.0042E+00  Eval BER@20dB: 0.02757
+  Iter 15000/20000  Loss: -7.5903E+00  Eval BER@20dB: 0.02447
+    -> Saved best weights (BER=0.02447)
+  Iter 15200/20000  Loss: -7.6236E+00  Eval BER@20dB: 0.02637
+  Iter 15400/20000  Loss: -7.3713E+00  Eval BER@20dB: 0.02494
+  Iter 15600/20000  Loss: -7.7042E+00  Eval BER@20dB: 0.02382
+    -> Saved best weights (BER=0.02382)
+  Iter 15800/20000  Loss: -7.6177E+00  Eval BER@20dB: 0.03074
+  Iter 16000/20000  Loss: -6.9947E+00  Eval BER@20dB: 0.02142
+    -> Saved best weights (BER=0.02142)
+  Iter 16200/20000  Loss: -6.8486E+00  Eval BER@20dB: 0.02353
+  Iter 16400/20000  Loss: -7.5610E+00  Eval BER@20dB: 0.02413
+  Iter 16600/20000  Loss: -7.5538E+00  Eval BER@20dB: 0.02158
+  Iter 16800/20000  Loss: -6.6887E+00  Eval BER@20dB: 0.02495
+  Iter 17000/20000  Loss: -7.1768E+00  Eval BER@20dB: 0.02309
+  Iter 17200/20000  Loss: -6.4333E+00  Eval BER@20dB: 0.02221
+  Iter 17400/20000  Loss: -7.8179E+00  Eval BER@20dB: 0.02260
+  Iter 17600/20000  Loss: -7.1669E+00  Eval BER@20dB: 0.02259
+  Iter 17800/20000  Loss: -7.7121E+00  Eval BER@20dB: 0.02432
+  Iter 18000/20000  Loss: -7.5991E+00  Eval BER@20dB: 0.02074
+    -> Saved best weights (BER=0.02074)
+  Iter 18200/20000  Loss: -7.6588E+00  Eval BER@20dB: 0.02207
+  Iter 18400/20000  Loss: -7.5174E+00  Eval BER@20dB: 0.02193
+  Iter 18600/20000  Loss: -7.6335E+00  Eval BER@20dB: 0.01764
+    -> Saved best weights (BER=0.01764)
+  Iter 18800/20000  Loss: -7.1222E+00  Eval BER@20dB: 0.01948
+  Iter 19000/20000  Loss: -7.7696E+00  Eval BER@20dB: 0.01879
+  Iter 19200/20000  Loss: -7.6718E+00  Eval BER@20dB: 0.01853
+  Iter 19400/20000  Loss: -7.9616E+00  Eval BER@20dB: 0.01902
+  Iter 19600/20000  Loss: -7.5986E+00  Eval BER@20dB: 0.01901
+  Iter 19800/20000  Loss: -7.7250E+00  Eval BER@20dB: 0.01883
+Stage 3 complete. Best BER@20dB: 0.01764
+[2026-05-19 17:17:04] ========== train_stage3 completed ==========
+[2026-05-19 17:17:04] All stages completed.

@@ -19,7 +19,7 @@ log() {
 run_stage() {
     local stage=$1
     log "========== Starting ${stage} =========="
-    python "${SCRIPT_DIR}/${stage}.py"
+    python -u "${SCRIPT_DIR}/${stage}.py"
     log "========== ${stage} completed =========="
 }
 

@@ -28,7 +28,7 @@ if gpus:
         pass
 
 LEARNING_RATE = 0.0005
-NUM_ITERS = 10000
+NUM_ITERS = 20000
 
 weights_file_name = 'weights-qQ_Method'
 

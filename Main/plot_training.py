@@ -43,7 +43,7 @@ ax.set_xlabel('Iteration')
 ax.set_ylabel('Loss')
 ax.set_title('Training Loss')
 ax.legend()
-ax.set_yscale('log')
+ax.set_yscale('symlog', linthresh=1.0)
 ax.grid(True, alpha=0.3)
 
 # -- BER --
