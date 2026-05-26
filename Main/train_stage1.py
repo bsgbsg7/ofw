@@ -6,6 +6,7 @@ Stage 1: 从头训练 qQ 模型，基于 BER 进行 checkpoint 保存和早停�
 import sys
 import pickle
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 # 将项目根目录和 src 目录加入 Python 路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +20,6 @@ import logging
 import numpy as np
 from sionna.phy.utils import compute_ber
 from plot_training import save_plots
-from tqdm import tqdm
 
 # 抑制 TensorFlow 日志输出，仅显示 ERROR 级别
 tf.get_logger().setLevel(logging.ERROR)
@@ -116,14 +116,14 @@ try:
                   f"BCE: {bce_val:.4f}  Eval BER@20dB: {avg_ber:.4f}")
 
             # 若 BER 和 BCE 同时改善才保存权重并重置 patience
-            if avg_ber < best_ber and bce_val < best_bce:
+            # if avg_ber < best_ber and bce_val < best_bce:
+            if avg_ber < best_ber:
                 weights = model_train.get_weights()
                 with open(weights_file_name, 'wb') as f:
                     pickle.dump(weights, f)
                 best_ber = avg_ber
-                best_bce = bce_val
                 patience_counter = 0
-                print(f"    -> Saved best weights (BER={best_ber:.4f}, BCE={best_bce:.4f})")
+                print(f"    -> Saved best weights (BER={best_ber:.4f})")
             else:
                 patience_counter += 1
 

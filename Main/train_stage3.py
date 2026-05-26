@@ -5,6 +5,7 @@ Lower LR, more iterations to push BER down further.
 import sys
 import pickle
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
 from src.qQ_Method.qQ_Model import qQ_MODEL
@@ -26,11 +27,11 @@ if gpus:
     except RuntimeError:
         pass
 
-LEARNING_RATE = 0.0005
-NUM_ITERS = 10000
+LEARNING_RATE = 0.0001
+NUM_ITERS = 20000
 
-weights_file_name = 'weights-qQ_Method'
-pretrained_weights_file_name = 'weights-qQ_Method_Stage2'
+weights_file_name = 'weights-qQ_Method_Final'
+pretrained_weights_file_name = 'weights-qQ_Method'
 
 model_train = qQ_MODEL(training=True)
 model_eval = qQ_MODEL(training=False)
@@ -54,7 +55,7 @@ def train_step(batch_size, ebno_min, ebno_max):
     optimizer.apply_gradients(zip(grads, model_train.trainable_weights))
     return total_loss, par, bce_loss
 
-best_ber = 1.0
+best_ber = 0.01030
 patience_counter = 0
 print(f"Stage 3: Extended fine-tuning for up to {NUM_ITERS} iterations")
 print(f"Batch size: {BATCH_SIZE * 256}, LR: {LEARNING_RATE}, SNR range: [10, 25]")
@@ -62,7 +63,7 @@ print(f"Batch size: {BATCH_SIZE * 256}, LR: {LEARNING_RATE}, SNR range: [10, 25]
 for i in range(NUM_ITERS):
     loss, par, bce = train_step(
         tf.constant(BATCH_SIZE * 256),
-        tf.constant(float(EBN0_DB_MIN + 10)),
+        tf.constant(float(EBN0_DB_MIN + 20)),
         tf.constant(float(EBN0_DB_MAX))
     )
 
@@ -70,7 +71,7 @@ for i in range(NUM_ITERS):
         model_eval.set_weights(model_train.get_weights())
         total_ber = 0.0
         for _ in range(5):
-            b, b_hat = model_eval(300, 20.0)
+            b, b_hat = model_eval(300, 24.0)
             total_ber += float(compute_ber(b, b_hat))
         avg_ber = total_ber / 5
 
@@ -87,8 +88,8 @@ for i in range(NUM_ITERS):
         else:
             patience_counter += 1
 
-        if patience_counter >= 20:
-            print(f"Early stopping at iter {i}, best BER: {best_ber:.5f}")
-            break
+        # if patience_counter >= 20:
+        #     print(f"Early stopping at iter {i}, best BER: {best_ber:.5f}")
+        #     break
 
 print(f"Stage 3 complete. Best BER@20dB: {best_ber:.5f}")

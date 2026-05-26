@@ -45,7 +45,7 @@ def move_png_files(delay_spread_str):
         Path(max_file).rename(new_name)
 
     # Create parent directory
-    parent_dir = Path("waveforms_ds_scan")
+    parent_dir = Path("waveforms_ds_scan_stage2")
     parent_dir.mkdir(exist_ok=True)
 
     # Create subdirectory name based on delay_spread
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         print(f"Processing delay_spread: {ds*1e9:.0f} ns")
         print(f"{'='*60}")
 
-        qQ_model = prepare_model(qQ_MODEL, 'weights-qQ_Method')
+        qQ_model = prepare_model(qQ_MODEL, 'weights-qQ_Method_Final')
         qQ_model._channel_model = TDL(model="A", delay_spread=ds,
                                        carrier_frequency=CARRIER_FREQ,
                                        min_speed=0.0, max_speed=0.0)

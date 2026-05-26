@@ -6,6 +6,7 @@ Uses smaller effective block (single symbol), lower LR, higher SNR.
 import sys
 import pickle
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
 from src.qQ_Method.qQ_Model import qQ_MODEL
@@ -30,7 +31,7 @@ if gpus:
 
 # Training Param - Stage 2: fine-tune with higher SNR
 LEARNING_RATE = 0.0001
-NUM_ITERS = 2000
+NUM_ITERS = 4000
 
 # Weights file name to save
 weights_file_name = 'weights-qQ_Method_Stage2'
@@ -105,8 +106,8 @@ for i in range(NUM_ITERS):
               f"BCE: {bce_val:.4f}  Eval BER@20dB: {avg_ber:.4f}")
 
         # 若 BER 和 BCE 同时改善才保存权重并重置 patience
-        if avg_ber < best_ber and bce_val < best_bce:
-        # if loss_val < best_loss:
+        # if avg_ber < best_ber and bce_val < best_bce:
+        if loss_val < best_loss:
             weights = model_train.get_weights()
             with open(weights_file_name, 'wb') as f:
                 pickle.dump(weights, f)
@@ -121,9 +122,9 @@ for i in range(NUM_ITERS):
             patience_counter += 1
 
         # 连续 15 次评估（即 750 步）未同时改善则早停
-        if patience_counter >= 15:
-            print(f"Early stopping at iter {i}, best BER: {best_ber:.4f}, best BCE: {best_bce:.4f}")
-            break
+        # if patience_counter >= 15:
+        #     print(f"Early stopping at iter {i}, best BER: {best_ber:.4f}, best BCE: {best_bce:.4f}")
+        #     break
 
 print(f"Stage 2 complete. Best Loss: {best_loss:.4E}, Best PAR: {best_par:.4f}, Best BER@20dB: {best_ber:.4f}, Best BCE: {best_bce:.4f}")
 print(f"Weights saved to: {weights_file_name}")

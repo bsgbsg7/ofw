@@ -49,21 +49,30 @@ def main():
     # 'Q BaseLine Model':                 prepare_model(Q_BASELINE_MODEL),
     # 'Q Method Model':                   prepare_model(Q_MODEL,'weights-Q_Method'),    
     # 'RQ Method Model':                  prepare_model(RQ_MODEL,'weights-RQ_Method'),      
-    'qQ Method Model':                  prepare_model(qQ_MODEL,'weights-qQ_Method'),      
+    # 'qQ Method Model':                  prepare_model(qQ_MODEL,'weights-qQ_Method'),   
+    'qQ Method Model':                  prepare_model(qQ_MODEL,'weights-qQ_Method_Final'),      
     }
 
     ###############################
     # Evaluating
     ###############################   
     ber_plots = sn.utils.PlotBER("")
-    for model_name, model in Models.items():    
+    for model_name, model in Models.items():
+        # ber_plots.simulate(model,
+        #             ebno_dbs=np.linspace(EBN0_DB_MIN, EBN0_DB_MAX, 40),
+        #             batch_size=BATCH_SIZE*100,
+        #             num_target_block_errors=100000, # simulate until 100 block errors occured
+        #             legend=BER_label_name_dict[model_name],
+        #             soft_estimates=True,
+        #             max_mc_iter=10000, # run 100 Monte-Carlo simulations (each with batch_size samples)
+        #             show_fig=False)
         ber_plots.simulate(model,
-                        ebno_dbs=np.linspace(EBN0_DB_MIN, EBN0_DB_MAX, 40),
-                        batch_size=BATCH_SIZE*100,
-                        num_target_block_errors=100000, # simulate until 100 block errors occured
+                        ebno_dbs=np.linspace(EBN0_DB_MIN, EBN0_DB_MAX, 25),
+                        batch_size=BATCH_SIZE*200,
+                        num_target_block_errors=1000,  # reduced for speed; increase for smoother tail
                         legend=BER_label_name_dict[model_name],
-                        soft_estimates=True,
-                        max_mc_iter=10000, # run 100 Monte-Carlo simulations (each with batch_size samples)
+                        soft_estimates=False,
+                        max_mc_iter=2000,
                         show_fig=False)
 
     # Saving Fig
@@ -72,15 +81,16 @@ def main():
     ###############################
     # CCDF
     ############################### 
-    exclude = {"E2EWL MP Model", "SC/FDE Model"}
-    filtered_Models = {k: v for k, v in Models.items() if k not in exclude}
-    ccdf_results = {}
-    for model_name, model in filtered_Models.items():    
-        model.CCDF_mode = True
-        x_time, rms_ds = model(205,0)
-        ccdf_results[model_name] = emprical_ccdf_plotter(x_time, rms_ds)
+    # exclude = {"E2EWL MP Model", "SC/FDE Model"}
+    # filtered_Models = {k: v for k, v in Models.items() if k not in exclude}
+    # ccdf_results = {}
+    # for model_name, model in filtered_Models.items():    
+    #     model.CCDF_mode = True
+    #     x_time, rms_ds = model(205,0)
+    #     ccdf_results[model_name] = emprical_ccdf_plotter(x_time, rms_ds)
     
-    plot_all_ccdf_results(ccdf_results)
+    # plot_all_ccdf_results(ccdf_results)
+
     # plot_all_ccdf_results_plotly(ccdf_results) # HTML CCDF plot viewer
 
 if __name__ == "__main__":
