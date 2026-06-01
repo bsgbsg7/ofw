@@ -7,8 +7,8 @@ class UncertaintyModel_2D(Layer):
     def __init__(
         self,
         hidden_units = 256,
-        min_log_sigma = -10.0,
-        max_log_sigma = 10.0,
+        min_log_sigma = -3.0,
+        max_log_sigma = 3.0,
         **kwargs
     ):
         super().__init__(**kwargs)

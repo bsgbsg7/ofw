@@ -33,12 +33,11 @@ from TDL_RandomDS import TDL_RandomDS
 # ============================================================================
 
 # 时延扩展 (RMS delay spread) 范围 [秒]
-# 最小值 50ns —— 对应短时延场景（如室内）
-# 最大值 300ns —— 对应中等时延场景（如城市微小区）
-# 该范围适中，既不过于简单（极短时延），也不过于恶劣（长时延），
-# 适合训练网络在中等多径条件下的鲁棒性
-delay_spread_min = 50e-9   # 50 纳秒
-delay_spread_max = 300e-9  # 300 纳秒
+# 最小值 10ns —— 近平坦衰落（所有径落在一个采样间隔内）
+# 最大值 300ns —— 丰富多径（城市微小区）
+# 宽范围覆盖让网络学会区分：平坦→TDM, 多径低速→OFDM, 多径高速→OTFS
+delay_spread_min = DELAY_SPREAD_MIN   # 10 纳秒 (from config)
+delay_spread_max = DELAY_SPREAD_MAX   # 300 纳秒 (from config)
 
 # TDL 模型类型："A" 表示 TDL-A 模型
 # TDL-A 是 3GPP TR38.901 中定义的非视距 (NLoS) 模型，具有 23 条多径
