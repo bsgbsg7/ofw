@@ -1,0 +1,576 @@
+2026-06-01 03:02:48.128360: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-06-01 03:02:48.128395: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-01 03:02:48.129525: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-06-01 03:02:48.134494: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-01 03:02:48.652728: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+======================================================================
+OTFS 特征直观证明 — 2D Conv 网络
+======================================================================
+2026-06-01 03:02:49.452965: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.453181: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.508999: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.509230: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.509423: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.509596: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.654797: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.655005: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.655178: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.655355: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.655516: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.655677: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.663227: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.663431: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.663607: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.663780: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.663959: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.664112: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1929] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 44528 MB memory:  -> device: 0, name: NVIDIA RTX A6000, pci bus id: 0000:2e:00.0, compute capability: 8.6
+2026-06-01 03:02:49.664372: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:901] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2026-06-01 03:02:49.664518: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1929] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 46857 MB memory:  -> device: 1, name: NVIDIA RTX A6000, pci bus id: 0000:61:00.0, compute capability: 8.6
+
+加载权重: weights-qQ_Method_TV
+2026-06-01 03:02:52.004500: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:454] Loaded cuDNN version 8907
+权重加载成功。
+
+==================================================
+提取 Q 矩阵...
+==================================================
+  低速 (3 m/s): Q shape=(32, 32)
+  高速 (120 m/s): Q shape=(32, 32)
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 36755 (\N{CJK UNIFIED IDEOGRAPH-8F93}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20837 (\N{CJK UNIFIED IDEOGRAPH-5165}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32500 (\N{CJK UNIFIED IDEOGRAPH-7EF4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 39057 (\N{CJK UNIFIED IDEOGRAPH-9891}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 29575 (\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32593 (\N{CJK UNIFIED IDEOGRAPH-7F51}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32476 (\N{CJK UNIFIED IDEOGRAPH-7EDC}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 23398 (\N{CJK UNIFIED IDEOGRAPH-5B66}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20064 (\N{CJK UNIFIED IDEOGRAPH-4E60}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 36895 (\N{CJK UNIFIED IDEOGRAPH-901F}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20986 (\N{CJK UNIFIED IDEOGRAPH-51FA}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26102 (\N{CJK UNIFIED IDEOGRAPH-65F6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 38388 (\N{CJK UNIFIED IDEOGRAPH-95F4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 39640 (\N{CJK UNIFIED IDEOGRAPH-9AD8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 30697 (\N{CJK UNIFIED IDEOGRAPH-77E9}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 38453 (\N{CJK UNIFIED IDEOGRAPH-9635}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 22522 (\N{CJK UNIFIED IDEOGRAPH-57FA}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20934 (\N{CJK UNIFIED IDEOGRAPH-51C6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 21069 (\N{CJK UNIFIED IDEOGRAPH-524D}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 23376 (\N{CJK UNIFIED IDEOGRAPH-5B50}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 22359 (\N{CJK UNIFIED IDEOGRAPH-5757}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 30456 (\N{CJK UNIFIED IDEOGRAPH-76F8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20301 (\N{CJK UNIFIED IDEOGRAPH-4F4D}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 27599 (\N{CJK UNIFIED IDEOGRAPH-6BCF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 21015 (\N{CJK UNIFIED IDEOGRAPH-5217}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 36234 (\N{CJK UNIFIED IDEOGRAPH-8D8A}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 22343 (\N{CJK UNIFIED IDEOGRAPH-5747}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 21248 (\N{CJK UNIFIED IDEOGRAPH-5300}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 25193 (\N{CJK UNIFIED IDEOGRAPH-6269}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 23637 (\N{CJK UNIFIED IDEOGRAPH-5C55}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32034 (\N{CJK UNIFIED IDEOGRAPH-7D22}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24341 (\N{CJK UNIFIED IDEOGRAPH-5F15}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 38750 (\N{CJK UNIFIED IDEOGRAPH-975E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 23545 (\N{CJK UNIFIED IDEOGRAPH-5BF9}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 35282 (\N{CJK UNIFIED IDEOGRAPH-89D2}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 27844 (\N{CJK UNIFIED IDEOGRAPH-6CC4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 28431 (\N{CJK UNIFIED IDEOGRAPH-6F0F}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26263 (\N{CJK UNIFIED IDEOGRAPH-6697}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 27491 (\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20132 (\N{CJK UNIFIED IDEOGRAPH-4EA4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 27425 (\N{CJK UNIFIED IDEOGRAPH-6B21}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 19982 (\N{CJK UNIFIED IDEOGRAPH-4E0E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20114 (\N{CJK UNIFIED IDEOGRAPH-4E92}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20851 (\N{CJK UNIFIED IDEOGRAPH-5173}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 20998 (\N{CJK UNIFIED IDEOGRAPH-5206}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24067 (\N{CJK UNIFIED IDEOGRAPH-5E03}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 36828 (\N{CJK UNIFIED IDEOGRAPH-8FDC}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 31163 (\N{CJK UNIFIED IDEOGRAPH-79BB}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 25509 (\N{CJK UNIFIED IDEOGRAPH-63A5}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 36817 (\N{CJK UNIFIED IDEOGRAPH-8FD1}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24133 (\N{CJK UNIFIED IDEOGRAPH-5E45}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 29702 (\N{CJK UNIFIED IDEOGRAPH-7406}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24819 (\N{CJK UNIFIED IDEOGRAPH-60F3}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 40784 (\N{CJK UNIFIED IDEOGRAPH-9F50}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 25928 (\N{CJK UNIFIED IDEOGRAPH-6548}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 37319 (\N{CJK UNIFIED IDEOGRAPH-91C7}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26679 (\N{CJK UNIFIED IDEOGRAPH-6837}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 28857 (\N{CJK UNIFIED IDEOGRAPH-70B9}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 34892 (\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 23485 (\N{CJK UNIFIED IDEOGRAPH-5BBD}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24471 (\N{CJK UNIFIED IDEOGRAPH-5F97}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24320 (\N{CJK UNIFIED IDEOGRAPH-5F00}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 29305 (\N{CJK UNIFIED IDEOGRAPH-7279}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 24449 (\N{CJK UNIFIED IDEOGRAPH-5F81}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 35777 (\N{CJK UNIFIED IDEOGRAPH-8BC1}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26126 (\N{CJK UNIFIED IDEOGRAPH-660E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 65306 (\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32467 (\N{CJK UNIFIED IDEOGRAPH-7ED3}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26500 (\N{CJK UNIFIED IDEOGRAPH-6784}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 26512 (\N{CJK UNIFIED IDEOGRAPH-6790}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32511 (\N{CJK UNIFIED IDEOGRAPH-7EFF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 33394 (\N{CJK UNIFIED IDEOGRAPH-8272}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 34394 (\N{CJK UNIFIED IDEOGRAPH-865A}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 32447 (\N{CJK UNIFIED IDEOGRAPH-7EBF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 21464 (\N{CJK UNIFIED IDEOGRAPH-53D8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:264: UserWarning: Glyph 25442 (\N{CJK UNIFIED IDEOGRAPH-6362}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_Q_structure.png', dpi=200, bbox_inches='tight')
+  保存: OTFS_proof_Q_structure.png
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 26102 (\N{CJK UNIFIED IDEOGRAPH-65F6}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 38388 (\N{CJK UNIFIED IDEOGRAPH-95F4}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 37319 (\N{CJK UNIFIED IDEOGRAPH-91C7}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 26679 (\N{CJK UNIFIED IDEOGRAPH-6837}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 32034 (\N{CJK UNIFIED IDEOGRAPH-7D22}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 24341 (\N{CJK UNIFIED IDEOGRAPH-5F15}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 24133 (\N{CJK UNIFIED IDEOGRAPH-5E45}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 36895 (\N{CJK UNIFIED IDEOGRAPH-901F}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 21333 (\N{CJK UNIFIED IDEOGRAPH-5355}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 31526 (\N{CJK UNIFIED IDEOGRAPH-7B26}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 21495 (\N{CJK UNIFIED IDEOGRAPH-53F7}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 22495 (\N{CJK UNIFIED IDEOGRAPH-57DF}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 25193 (\N{CJK UNIFIED IDEOGRAPH-6269}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 23637 (\N{CJK UNIFIED IDEOGRAPH-5C55}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 22343 (\N{CJK UNIFIED IDEOGRAPH-5747}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 21248 (\N{CJK UNIFIED IDEOGRAPH-5300}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 23376 (\N{CJK UNIFIED IDEOGRAPH-5B50}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 36733 (\N{CJK UNIFIED IDEOGRAPH-8F7D}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 27874 (\N{CJK UNIFIED IDEOGRAPH-6CE2}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 39057 (\N{CJK UNIFIED IDEOGRAPH-9891}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 35889 (\N{CJK UNIFIED IDEOGRAPH-8C31}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 21709 (\N{CJK UNIFIED IDEOGRAPH-54CD}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 24212 (\N{CJK UNIFIED IDEOGRAPH-5E94}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 39640 (\N{CJK UNIFIED IDEOGRAPH-9AD8}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 29305 (\N{CJK UNIFIED IDEOGRAPH-7279}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 24449 (\N{CJK UNIFIED IDEOGRAPH-5F81}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 35777 (\N{CJK UNIFIED IDEOGRAPH-8BC1}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 26126 (\N{CJK UNIFIED IDEOGRAPH-660E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 65306 (\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 33021 (\N{CJK UNIFIED IDEOGRAPH-80FD}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 37327 (\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 33267 (\N{CJK UNIFIED IDEOGRAPH-81F3}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 25152 (\N{CJK UNIFIED IDEOGRAPH-6240}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 38598 (\N{CJK UNIFIED IDEOGRAPH-96C6}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 20013 (\N{CJK UNIFIED IDEOGRAPH-4E2D}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 22312 (\N{CJK UNIFIED IDEOGRAPH-5728}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 19968 (\N{CJK UNIFIED IDEOGRAPH-4E00}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:307: UserWarning: Glyph 28857 (\N{CJK UNIFIED IDEOGRAPH-70B9}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 24133 (\N{CJK UNIFIED IDEOGRAPH-5E45}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 36895 (\N{CJK UNIFIED IDEOGRAPH-901F}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 21333 (\N{CJK UNIFIED IDEOGRAPH-5355}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 31526 (\N{CJK UNIFIED IDEOGRAPH-7B26}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 21495 (\N{CJK UNIFIED IDEOGRAPH-53F7}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 26102 (\N{CJK UNIFIED IDEOGRAPH-65F6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 22495 (\N{CJK UNIFIED IDEOGRAPH-57DF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 25193 (\N{CJK UNIFIED IDEOGRAPH-6269}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 23637 (\N{CJK UNIFIED IDEOGRAPH-5C55}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 38388 (\N{CJK UNIFIED IDEOGRAPH-95F4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 37319 (\N{CJK UNIFIED IDEOGRAPH-91C7}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 26679 (\N{CJK UNIFIED IDEOGRAPH-6837}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 32034 (\N{CJK UNIFIED IDEOGRAPH-7D22}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 24341 (\N{CJK UNIFIED IDEOGRAPH-5F15}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 22343 (\N{CJK UNIFIED IDEOGRAPH-5747}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 21248 (\N{CJK UNIFIED IDEOGRAPH-5300}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 39057 (\N{CJK UNIFIED IDEOGRAPH-9891}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 35889 (\N{CJK UNIFIED IDEOGRAPH-8C31}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 21709 (\N{CJK UNIFIED IDEOGRAPH-54CD}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 24212 (\N{CJK UNIFIED IDEOGRAPH-5E94}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 23376 (\N{CJK UNIFIED IDEOGRAPH-5B50}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 36733 (\N{CJK UNIFIED IDEOGRAPH-8F7D}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 27874 (\N{CJK UNIFIED IDEOGRAPH-6CE2}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 39640 (\N{CJK UNIFIED IDEOGRAPH-9AD8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 29305 (\N{CJK UNIFIED IDEOGRAPH-7279}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 24449 (\N{CJK UNIFIED IDEOGRAPH-5F81}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 35777 (\N{CJK UNIFIED IDEOGRAPH-8BC1}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 26126 (\N{CJK UNIFIED IDEOGRAPH-660E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 65306 (\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 33021 (\N{CJK UNIFIED IDEOGRAPH-80FD}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 37327 (\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 33267 (\N{CJK UNIFIED IDEOGRAPH-81F3}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 25152 (\N{CJK UNIFIED IDEOGRAPH-6240}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 38598 (\N{CJK UNIFIED IDEOGRAPH-96C6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 20013 (\N{CJK UNIFIED IDEOGRAPH-4E2D}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 22312 (\N{CJK UNIFIED IDEOGRAPH-5728}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 19968 (\N{CJK UNIFIED IDEOGRAPH-4E00}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:308: UserWarning: Glyph 28857 (\N{CJK UNIFIED IDEOGRAPH-70B9}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_symbol_spread.png', dpi=200, bbox_inches='tight')
+  保存: OTFS_proof_symbol_spread.png
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 23398 (\N{CJK UNIFIED IDEOGRAPH-5B66}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 20064 (\N{CJK UNIFIED IDEOGRAPH-4E60}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 36895 (\N{CJK UNIFIED IDEOGRAPH-901F}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 39640 (\N{CJK UNIFIED IDEOGRAPH-9AD8}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 23376 (\N{CJK UNIFIED IDEOGRAPH-5B50}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 22359 (\N{CJK UNIFIED IDEOGRAPH-5757}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 38750 (\N{CJK UNIFIED IDEOGRAPH-975E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 23545 (\N{CJK UNIFIED IDEOGRAPH-5BF9}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 35282 (\N{CJK UNIFIED IDEOGRAPH-89D2}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 33021 (\N{CJK UNIFIED IDEOGRAPH-80FD}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 37327 (\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 21344 (\N{CJK UNIFIED IDEOGRAPH-5360}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 27604 (\N{CJK UNIFIED IDEOGRAPH-6BD4}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 36234 (\N{CJK UNIFIED IDEOGRAPH-8D8A}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 21487 (\N{CJK UNIFIED IDEOGRAPH-53EF}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 30456 (\N{CJK UNIFIED IDEOGRAPH-76F8}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 36317 (\N{CJK UNIFIED IDEOGRAPH-8DDD}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 31163 (\N{CJK UNIFIED IDEOGRAPH-79BB}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 19982 (\N{CJK UNIFIED IDEOGRAPH-4E0E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 22823 (\N{CJK UNIFIED IDEOGRAPH-5927}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 36828 (\N{CJK UNIFIED IDEOGRAPH-8FDC}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 25928 (\N{CJK UNIFIED IDEOGRAPH-6548}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 25193 (\N{CJK UNIFIED IDEOGRAPH-6269}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 23637 (\N{CJK UNIFIED IDEOGRAPH-5C55}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 20803 (\N{CJK UNIFIED IDEOGRAPH-5143}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 32032 (\N{CJK UNIFIED IDEOGRAPH-7D20}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 25968 (\N{CJK UNIFIED IDEOGRAPH-6570}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 27599 (\N{CJK UNIFIED IDEOGRAPH-6BCF}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 34892 (\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 23792 (\N{CJK UNIFIED IDEOGRAPH-5CF0}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 20540 (\N{CJK UNIFIED IDEOGRAPH-503C}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 24191 (\N{CJK UNIFIED IDEOGRAPH-5E7F}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 65306 (\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 21464 (\N{CJK UNIFIED IDEOGRAPH-53D8}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 25442 (\N{CJK UNIFIED IDEOGRAPH-6362}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 30697 (\N{CJK UNIFIED IDEOGRAPH-77E9}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 38453 (\N{CJK UNIFIED IDEOGRAPH-9635}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 22810 (\N{CJK UNIFIED IDEOGRAPH-591A}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 32500 (\N{CJK UNIFIED IDEOGRAPH-7EF4}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:378: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 38750 (\N{CJK UNIFIED IDEOGRAPH-975E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 23545 (\N{CJK UNIFIED IDEOGRAPH-5BF9}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 35282 (\N{CJK UNIFIED IDEOGRAPH-89D2}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 33021 (\N{CJK UNIFIED IDEOGRAPH-80FD}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 37327 (\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 21344 (\N{CJK UNIFIED IDEOGRAPH-5360}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 27604 (\N{CJK UNIFIED IDEOGRAPH-6BD4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 36234 (\N{CJK UNIFIED IDEOGRAPH-8D8A}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 39640 (\N{CJK UNIFIED IDEOGRAPH-9AD8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 21487 (\N{CJK UNIFIED IDEOGRAPH-53EF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 23398 (\N{CJK UNIFIED IDEOGRAPH-5B66}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 20064 (\N{CJK UNIFIED IDEOGRAPH-4E60}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 36895 (\N{CJK UNIFIED IDEOGRAPH-901F}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 23376 (\N{CJK UNIFIED IDEOGRAPH-5B50}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 22359 (\N{CJK UNIFIED IDEOGRAPH-5757}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 30456 (\N{CJK UNIFIED IDEOGRAPH-76F8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 36317 (\N{CJK UNIFIED IDEOGRAPH-8DDD}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 31163 (\N{CJK UNIFIED IDEOGRAPH-79BB}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 19982 (\N{CJK UNIFIED IDEOGRAPH-4E0E}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 22823 (\N{CJK UNIFIED IDEOGRAPH-5927}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 36828 (\N{CJK UNIFIED IDEOGRAPH-8FDC}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 25928 (\N{CJK UNIFIED IDEOGRAPH-6548}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 25193 (\N{CJK UNIFIED IDEOGRAPH-6269}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 23637 (\N{CJK UNIFIED IDEOGRAPH-5C55}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 20803 (\N{CJK UNIFIED IDEOGRAPH-5143}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 32032 (\N{CJK UNIFIED IDEOGRAPH-7D20}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 25968 (\N{CJK UNIFIED IDEOGRAPH-6570}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 27599 (\N{CJK UNIFIED IDEOGRAPH-6BCF}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 34892 (\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 23792 (\N{CJK UNIFIED IDEOGRAPH-5CF0}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 20540 (\N{CJK UNIFIED IDEOGRAPH-503C}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 24191 (\N{CJK UNIFIED IDEOGRAPH-5E7F}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 65306 (\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 21464 (\N{CJK UNIFIED IDEOGRAPH-53D8}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 25442 (\N{CJK UNIFIED IDEOGRAPH-6362}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 30697 (\N{CJK UNIFIED IDEOGRAPH-77E9}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 38453 (\N{CJK UNIFIED IDEOGRAPH-9635}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 22810 (\N{CJK UNIFIED IDEOGRAPH-591A}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 32500 (\N{CJK UNIFIED IDEOGRAPH-7EF4}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+/home/shizheng/baseline/ofw-hao/Main_OTFS/otfs_proof_visualization.py:379: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from font(s) DejaVu Sans.
+  plt.savefig('OTFS_proof_comparison.png', dpi=200, bbox_inches='tight')
+  保存: OTFS_proof_comparison.png
+
+======================================================================
+OTFS 特征直观证明 — 总结
+======================================================================
+
+    ┌─────────────────────────────────────────────────────────┐
+    │                 OTFS 特征证明 — 量化指标                  │
+    ├──────────────────┬──────────┬──────────┬───────┬────────┤
+    │ 指标              │ 低速 Q   │ 高速 Q   │ IDFT  │ ISFFT  │
+    ├──────────────────┼──────────┼──────────┼───────┼────────┤
+    │ 非对角能量占比     │ 0.9674  │ 0.9682  │ 0.9688 │ 0.9688 │
+    │ 与 IDFT 距离       │ 1.4808  │ 1.4647  │ 0.0   │ 5.6827 │
+    │ 扩展因子 (>10%)    │ 31.1/32   │ 31.2/32   │ 32.0/32  │ 32.0/32 │
+    │ Q^H·Q 偏离 I 度    │ 0.2727  │ 0.1895  │ 0.0000 │ N/A    │
+    └──────────────────┴──────────┴──────────┴───────┴────────┘
+    
+  判定逻辑（对应 OFDM 的"看基底/看频谱"）：
+
+  ❌ 未通过: Q 过于接近对角 → 可能退化到 OFDM
+  ✅ 通过: Q 与 IDFT 距离显著 (1.481/1.465) → 学习了不同变换
+  ⚠️  部分: 扩展因子未显著超过 IDFT
+  ✅ 通过: Q 随 Doppler 变化 (平均差异=0.0301) → 自适应
+  ✅ 通过: Q 近似酉矩阵 (偏离=0.273/0.189) → 能量守恒
+
+    ┌─────────────────────────────────────────────────────────┐
+    │ 直观类比：                                               │
+    │                                                         │
+    │ OFDM 证明 = 看基底正弦波 + 看多载波频谱                    │
+    │ OTFS 证明 = 看 Q 非对角 + 看单符号扩展 + 看酉性           │
+    │                                                         │
+    │ 如果 Q ≈ IDFT → 网络"退化"为 OFDM                        │
+    │ 如果 Q 是非对角扩展矩阵且酉 → 网络学到了"类 OTFS"变换      │
+    └─────────────────────────────────────────────────────────┘
+    
+可视化完成。生成文件：
+  OTFS_proof_Q_structure.png   — Q 矩阵结构与 IDFT/ISFFT 对比
+  OTFS_proof_symbol_spread.png — 单符号时频扩展响应
+  OTFS_proof_comparison.png    — 多维度量化对比
