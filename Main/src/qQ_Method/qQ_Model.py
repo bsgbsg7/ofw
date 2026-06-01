@@ -132,7 +132,8 @@ class qQ_MODEL(keras.Model):
         # ========== 接收链路组件 ==========
         self._ls_est = LSChannelEstimator(self._rg, interpolation_type="nn")  # LS 信道估计
         self._lmmse_equ = LMMSEEqualizer(self._rg, self._sm)                 # LMMSE 均衡
-        self._demapper = Demapper("app",
+        self._demapper = 
+        ("app",
                                   "pam" if self._num_bits_per_symbol == 1 else 'qam',
                                   self._num_bits_per_symbol,
                                   hard_out=False)                              # QAM 符号 → LLR (软解调)
@@ -190,71 +191,121 @@ class qQ_MODEL(keras.Model):
         """
 
         # -------- 步骤 1-3: 比特生成、QAM 映射、资源网格 --------
+        # ebnodb2no: Eb/N0 (dB) → 噪声方差, 根据调制阶数/码率/资源网格计算每符号噪声功率
+        # 将 Eb/N0 (dB) 转换为噪声方差，根据调制阶数、码率、资源网格计算出每符号的噪声功率
         no = ebnodb2no(ebno_db, self._num_bits_per_symbol, self._coderate, self._rg)
-        b = self._binary_source([batch_size, 1, self._num_streams_per_tx, self._n])  # 随机比特
-        x = self._mapper(b)                  # 比特 → QAM符号
+        # BinarySource: 随机比特生成器, shape=[batch, 1, num_streams, num_bits]
+        # 批量大小 × 1(单发射端) × 流数 × 每帧总比特数
+        b = self._binary_source([batch_size, 1, self._num_streams_per_tx, self._n])
+        # 作用：将二进制比特调制为 QAM 复数星座点。】
+        # 输入: [1, 0, 1, 1]  (4个比特)
+        # 输出: -0.316 + 0.948j  (一个复数，对应16QAM星座图上一个点)
+        # 即把 [batch, 1, num_streams, num_bits] 的比特流 → [batch, 1, num_streams, num_symbols] 的复数符号序列。
+        # Mapper 决定"一个符号长什么样"
+        x = self._mapper(b)       
+        # 作用：将扁平的 QAM 符号序列填充到 OFDM 时频资源网格的正确位置上，同时插入导频。
+        # 即把 [batch, 1, num_streams, num_symbols] → [batch, 1, num_streams, num_ofdm_symbols, fft_size] 
+        # ResourceGridMapper 决定"符号摆在哪里"。   
         x_rg = self._rg_mapper(x)            # 映射到资源网格 [batch, 1, 1, num_ofdm_symbols, fft_size]
 
         # -------- 步骤 4: 信道估计（获取 CSI） --------
         # 4a. 生成时域信道冲激响应
+        # a   — 每条多径的复增益 (amplitude)
+        # tau — 每条多径的时延 (delay, 单位: 秒)
         a, tau = self._channel_model(batch_size,
                                      self._rg.num_time_samples+self._l_tot-1,
                                      self._rg.bandwidth)
+        # 每个抽头 h[l] 存储的是：所有时延落在第 l 个采样间隔内的多径的叠加
+        # 核心转换：连续时延 tau 按采样间隔量化到离散抽头 l。l_min/l_max 指定了抽头索引范围，bandwidth 决定采样间隔。
+        # 物理含义：h_time[l] 就是多径信道在第 l 个抽头的复增益，
+        # 接收信号 = sum(h_time[l] * x[t-l]) + noise，对应后面 ApplyTimeChannel 做的时域卷积
         h_time = cir_to_time_channel(self._rg.bandwidth, a, tau,
                                       l_min=self._l_min, l_max=self._l_max, normalize=True)
 
         # 4b. 生成频域信道响应（用于可视化对比）
+        # 从时变幅度 a 中按 OFDM 符号周期抽取一个代表值:
+        #   步长 = fft_size + cp_len (一个完整OFDM符号的采样数)
+        #   起始位置 = cp_len (跳过第一个CP，取有用部分的第一个采样)
+        #   效果: a 从逐采样点 → 逐OFDM符号, shape [..., num_ofdm_symbols]
         a_freq = a[..., self._rg.cyclic_prefix_length:-1:(self._rg.fft_size+self._rg.cyclic_prefix_length)]
-        a_freq = a_freq[..., :self._rg.num_ofdm_symbols]
+        a_freq = a_freq[..., :self._rg.num_ofdm_symbols]  # 截取恰好 num_ofdm_symbols 个符号
+        # cir_to_ofdm_channel: 用时延 tau + 每符号幅度 a_freq 计算每个子载波频率上的频域信道响应
+        #   h_freq[f] = sum_k a_freq[k] * exp(-j*2π * f * tau[k])
         h_freq = cir_to_ofdm_channel(self._frequencies, a_freq, tau, normalize=True)
+        # 移除保护带/DC空子载波, 只保留数据子载波上的信道系数
         h_freq = self._remove_nulled_scs(h_freq)
+        # 上面的 h_freq 是为了看图，下面的求解是为了得到papr权重
 
-        # -------- 步骤 5: CSI 获取与 Q 矩阵生成 --------
-        # 方案 A (False): 通过完整 OFDM 链路获取 CSI（较慢，用于调试）
+        # -------- 步骤 5: 获取 CIR 并计算 RMS 延迟扩展 --------
+        # 目的: 得到 RMS 延迟扩展 rms_ds, 供 Uncertainty 网络自适应调节损失权重
+            # 信道差（RMS_DS 大）→ 降低 PAPR loss 权重，优先保 BER
+            # 信道好（RMS_DS 小）→ 提高 PAPR loss 权重，趁机压低峰均比
+        # 两种方案获取 CIR (pilots_post_channel):
+        #   A) 完整 OFDM 链路: 调制→信道→解调→LS估计 (慢, 模拟真实接收)
+        #   B) delta 脉冲探测: 发单点脉冲过信道, 输出即是 CIR (快, 等效但省去调制解调)
+
+        # 方案 A (False): 完整 OFDM 链路 — 导频→信道→LS信道估计→频域CSI
         if False:
-            x_time_for_csi = self.OFDM_modulator(x_rg)
-            y_time = self._channel_time(x_time_for_csi, h_time, 0)
+            x_time_for_csi = self.OFDM_modulator(x_rg)          # IFFT + 加CP
+            y_time = self._channel_time(x_time_for_csi, h_time, 0)  # 通过时域信道
             y_time = y_time[...,-0:-self._l_max]
-            y = self.OFDM_demodulator(y_time)
-            h, err_var = self._ls_est(y, no)
-            x_hat_debug, no_eff = self._lmmse_equ(y, h, err_var, no)
-            llr = self._demapper(x_hat_debug, no_eff)
-            b_hat_debug = hard_decisions(llr)
+            y = self.OFDM_demodulator(y_time)                   # 去CP + FFT
+            h, err_var = self._ls_est(y, no)                    # LS 信道估计
+            x_hat_debug, no_eff = self._lmmse_equ(y, h, err_var, no)  # LMMSE 均衡
+            llr = self._demapper(x_hat_debug, no_eff)           # 软解调 → LLR
+            b_hat_debug = hard_decisions(llr)                   # LLR → 硬判比特
             channel_freq_domain = h[:,0,0,0,0,0,:]
 
-        # 方案 B (True): 直接发送 delta 脉冲获取时域 CIR（高效）
+        # 方案 B (True): delta 脉冲探测 — 频谱平坦, 输出 = CIR 本身 (y = δ * h = h)
         if True:
-            # 构造 delta 脉冲：在频域第一个子载波上为 1 + 0j，其余为 0
-            x_time_for_csi = x_rg[:,:,:,0,:]
+            # 频域 delta: 只在 DC 子载波放 1+0j, 其余置零 → 平坦频谱
+            x_time_for_csi = x_rg[:,:,:,0,:]    # 资源网格 [batch, 1, 1, num_ofdm_symbols, fft_size]
             delta = tf.tile(
                 tf.reshape(tf.complex(tf.one_hot(0, self._fft_size, dtype=tf.float32),
                                        tf.zeros(self._fft_size, dtype=tf.float32)),
                            [1,1,1,self._fft_size]),
                 [tf.shape(x_rg)[0],1,1,1])
 
-            # 将 delta 脉冲补零到与 OFDM 调制后等长，以便通过时域信道
+            # 补零对齐: delta 脉冲补零到 OFDM 调制后同等长度, 保证时域卷积维度匹配
             diff = tf.shape(self.OFDM_modulator(x_rg))[-1] - tf.shape(x_time_for_csi)[-1]
             paddings = tf.stack([[0, 0], [0, 0], [0, 0], tf.stack([0, diff])])
             delta_padded = tf.pad(delta, paddings, mode='CONSTANT', constant_values=tf.complex(0.0, 0.0))
 
-            # delta 脉冲通过时域信道 → 直接得到信道冲激响应
+            # delta 脉冲通过时域信道 → 输出即信道冲激响应 (CIR)
             y_time = self._channel_time(delta_padded, h_time, 0)
+            # 经过时域卷积 ApplyTimeChannel 后，y_time 的总长度 = 发射信号长度 + 多径抽头数 - 1 （尾部多出了多径拖尾）。
+            # 为了后续 OFDM 解调（FFT），需要把接收信号截回到正确长度。
+                # -self._l_min — 起始位置（从末尾倒推 l_min 个样本，l_min 通常为 0，即从头开始）
+                # -self._l_max — 终止位置（去掉末尾 l_max 个样本的多径拖尾）
+            # 物理直觉：假设 l_max = 5，发射了 80 个采样，卷积后收端得到 84 个采样（多了 4 个多径拖尾），这一步 [...: -5] 就是切掉末尾 5 个样本，恢复正确长度以供 FFT 解调。
+            # 0 是起始索引，-5 是终止索引（倒数第 5 个），所以结果是 95 个样本，只是切掉了末尾 5 个多径拖尾
             y_time = y_time[...,-self._l_min:-self._l_max]
 
-            # 提取信道导频响应（即 CIR 的抽头值）
+            # 提取 CIR: y_time[batch, tx, rx, taps] → [batch, l_max, 1]
+            #   [:, 0, 0, :l_max] 取第1个收发对的全部batch、前l_max个抽头
+            #   expand_dims(axis=-1) 补通道维, 适配下游 _qQ_creator_layer 的输入 shape
+            #           shape 从 [batch, l_max] → [batch, l_max, 1]
             pilots_post_channel = tf.expand_dims(y_time[:,0,0,:self._l_max], axis=-1)
 
-            # 计算 RMS 延迟扩展 (Root Mean Square Delay Spread)
-            # DS_rms = sqrt( E[tau^2] - E[tau]^2 )，用于表征多径信道的频率选择性
-            h = tf.squeeze(pilots_post_channel, axis=-1)   # (batch, 抽头数)
-            delays = tf.range(tf.shape(h)[1], dtype=tf.float32)
-            power = tf.square(tf.abs(h))
+            # delta脉冲过信道 → y_time 原始长度 = 脉冲长度 + l_tot - 1
+
+            # 第1次: y_time[..., -l_min : -l_max]      ← 去尾: 切掉卷积拖尾的多余样本
+            # 第2次: y_time[:, 0, 0, :l_max]           ← 做两件事:
+            #                                              ① [:, 0, 0, ...]  选收发天线对
+            #                                              ② [:l_max]        只取前 l_max 个CIR抽头
+
+
+            # 计算 RMS 延迟扩展: DS_rms = sqrt( E[τ²] - E[τ]² )
+            # 以抽头功率为权重, 值越大表示多径越丰富, 信道频率选择性越强
+            h = tf.squeeze(pilots_post_channel, axis=-1)        # [batch, 抽头数]
+            delays = tf.range(tf.shape(h)[1], dtype=tf.float32)  # 抽头索引作为等效时延
+            power = tf.square(tf.abs(h))                         # 每抽头功率 |h[l]|²
             mean_delay = tf.reduce_sum(delays * power, axis=-1) / tf.reduce_sum(power, axis=-1)
             rms_ds = tf.sqrt(
                 tf.reduce_sum(power * tf.square(delays - mean_delay[:, None]), axis=-1)
                 / tf.reduce_sum(power, axis=-1)
             )
-            rms_ds = tf.expand_dims(rms_ds, -1)
+            rms_ds = tf.expand_dims(rms_ds, -1)                 # [batch, 1]
 
         # 神经网络根据 CIR 生成 Q 矩阵 (N×N) 和 q 均衡向量 (N 维)
         Q, q = self._qQ_creator_layer(pilots_post_channel, training=self.training)
@@ -278,15 +329,24 @@ class qQ_MODEL(keras.Model):
         r_freq = self._Q_demodulator(Q, y_time)
 
         # -------- 步骤 9: 频域均衡 & 解映射 --------
-        # 移除第一个 OFDM 符号（可能被用于导频）
+        # 移除第一个 OFDM 符号（被用于导频）
+        # Kronecker 导频图案中第 0 个 OFDM 符号的全部子载波都放了导频，不承载数据。
+        # 解调后这个符号需要剔除，剩下从索引 1 开始的才是数据符号。
         r_freq = r_freq[:,:,:,1:,:]
 
         # q 向量广播：对每个子载波做逐元素均衡（类似单抽头均衡）
+        # q 来自 _qQ_creator_layer, shape=[batch, fft_size], 是每个子载波的缩放因子
+        # 通过 newaxis + tile 广播到 r_freq 同形: [batch, 1, 1, num_data_symbols, fft_size]
         q = q[:, tf.newaxis, tf.newaxis, tf.newaxis, :]
         q = tf.tile(q, [1, 1, 1, tf.shape(r_freq)[-2], 1])
+        # 逐元素相乘: 每个子载波上的接收符号 × 对应缩放因子 → 单抽头均衡
+        # 这是最简单的均衡方式, 假设 Q^H 已大致对角化了信道, 残留只需逐子载波缩放
         r_freq_equalzied = r_freq * q
 
         # 展平频域符号以匹配 QAM 符号格式
+        # r_freq_equalzied: [batch, 1, 1, num_data_symbols, fft_size]
+        #   → reshape:       [batch, 1, 1, num_data_symbols * fft_size]
+        #   → set_shape:     [None, None, None, tot_symbols_to_deliver]  (固定静态shape供后续层使用)
         current_shape = tf.shape(r_freq_equalzied)
         r_freq_equalzied = tf.reshape(r_freq_equalzied,
                                       [current_shape[0], current_shape[1], current_shape[2], -1])
