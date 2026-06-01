@@ -4,9 +4,8 @@ Transfer pre-trained Q-creator + uncertainty model weights to CNN model.
 
 Weight mapping (verified by shape comparison):
   PT[ 0:48] → CNN[ 0:48]  qQ_creator_conv_gru          (48 weights, identical)
-  PT[48:76] → CNN[78:106] UncertaintyModel_2D + _1D    (28 weights, identical)
-  CNN[48:64]               CNNEqualizer                 (16 weights, NEW — random init)
-  CNN[64:78]               Q_Demodulator BN params      (keep as-is)
+  PT[48:76] → CNN[59:87]  UncertaintyModel_2D + _1D    (28 weights, identical)
+  CNN[48:59]               MLPEqualizer                 (11 weights, NEW — zero init)
 
 Run once before training:
     python transfer_weights.py
@@ -34,11 +33,10 @@ cnn_weights = model.get_weights()
 print(f"CNN model weights: {len(cnn_weights)} arrays")
 
 # Transfer (indices verified by shape comparison)
-cnn_weights = list(cnn_weights)  # make mutable (92 weights total)
+cnn_weights = list(cnn_weights)  # make mutable (87 weights total)
 cnn_weights[0:48] = pt_weights[0:48]        # Q-creator (48 weights)
-# CNN[48:64] = CNNEqualizer (16 weights, keep random init)
-# CNN[64:92] = uncertainty models (28 weights)
-cnn_weights[64:92] = pt_weights[48:76]      # UncertaintyModel_2D + _1D
+# CNN[48:59] = MLPEqualizer (11 weights, keep zero init)
+cnn_weights[59:87] = pt_weights[48:76]      # UncertaintyModel_2D + _1D (28 weights)
 
 model.set_weights(cnn_weights)
 print("Weight transfer complete.")
