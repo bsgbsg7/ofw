@@ -1,13 +1,13 @@
 # Channel Parameters
 Time_channel = True
-CARRIER_FREQ = 3.5e9
+CARRIER_FREQ = 28e9  # 28 GHz mmWave
 DELAY_SPREAD = 100e-9  # Fixed moderate delay spread for OTFS variant
 L_MIN = 0
 
 # General Parameters
 NUM_BITS_PER_SYMBOL = 4
-SYMBOL_RATE = 1e6
-TOT_SYMBOLS_TO_DELIVER = 64
+SYMBOL_RATE = 10e6  # 10 MHz bandwidth → 100ns delay resolution
+TOT_SYMBOLS_TO_DELIVER = 960  # 15 data × 64 subcarriers → NUM_OFDM_SYMBOL=16
 
 # Single Carrier Parameters
 NUM_SC_SYMBOL = TOT_SYMBOLS_TO_DELIVER
@@ -15,10 +15,10 @@ T_sc_symbol = 1/SYMBOL_RATE
 T_sc_block = T_sc_symbol*NUM_SC_SYMBOL
 
 # OFDM Parameters
-FFT_SIZE = 32
-CYCLIC_PRFX_LEN = 16
+FFT_SIZE = 64
+CYCLIC_PRFX_LEN = 32
 SUBCARRIER_SPACING = int((SYMBOL_RATE/FFT_SIZE))
-OFDM_SYMBOLS_FOR_PILOT_INDICES = [0]
+OFDM_SYMBOLS_FOR_PILOT_INDICES = [0]  # one pilot at symbol 0
 NUM_OFDM_SYMBOL = int(TOT_SYMBOLS_TO_DELIVER/FFT_SIZE + len(OFDM_SYMBOLS_FOR_PILOT_INDICES))
 T_ofdm_symbol = T_sc_symbol*(FFT_SIZE+CYCLIC_PRFX_LEN)
 T_ofdm_block = T_ofdm_symbol*NUM_OFDM_SYMBOL
@@ -37,19 +37,14 @@ EBN0_DB_MAX = 25
 SPEED_MIN = 0.5    # near-static pedestrian
 SPEED_MAX = 120.0   # ~432 km/h high-speed train
 
-# Delay spread range [seconds] — wide range to cover flat→rich multipath
-# 10ns → nearly flat fading (all taps within one sample interval)
-# 600ns → rich multipath (urban macrocell, like DeepOFW)
+# Delay spread range [seconds]
 DELAY_SPREAD_MIN = 10e-9
-DELAY_SPREAD_MAX = 600e-9
+DELAY_SPREAD_MAX = 600e-9  # at 10MHz: 100ns res → DS=600ns spans 6 delay bins
 
 # Time snapshot sampling for OTFS time-varying channel
-# Number of CIR snapshots sampled uniformly across the time axis.
-# More snapshots → finer time (Doppler) resolution for the Q-creator.
-# With FFT_SIZE=32, CP=16, NUM_OFDM_SYMBOL=3 → ~144 time samples available.
-NUM_TIME_SNAPSHOTS = 12
+NUM_TIME_SNAPSHOTS = 24  # 16 symbols × 96 samples/sym = 1536 time samples
 
 # Whether to include PAPR in the loss (multi-task learning)
-USE_PAPR_LOSS = True
-PAPR_WEIGHT = 5.0  # strong pressure: PAPR contribution should rival BCE
-PAPR_THRESHOLD_DB = 0.0  # 0dB = threshold at average power → PAR always non-zero
+USE_PAPR_LOSS = False  # pure BCE for stable initial convergence
+PAPR_WEIGHT = 5.0
+PAPR_THRESHOLD_DB = 0.0

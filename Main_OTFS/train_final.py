@@ -52,10 +52,10 @@ model_train = qQ_MODEL_TV(training=True)
 model_eval = qQ_MODEL_TV(training=False)
 model_eval(2, 40.0)
 
-LR_INITIAL = 0.001; LR_ALPHA = 0.01; LR_WARMUP = 300
-NUM_ITERS = 8000
-EFFECTIVE_BATCH = BATCH_SIZE * 32  # smaller batch → faster iterations
-weights_file = 'weights-qQ_Method_TV'
+LR_INITIAL = 0.0005; LR_ALPHA = 0.1; LR_WARMUP = 1000
+NUM_ITERS = 15000
+EFFECTIVE_BATCH = BATCH_SIZE * 8
+weights_file = 'weights-qQ_Method_TV_64_10M'
 
 # Train from scratch — uncertainty model learns to balance BCE/PAPR jointly
 print("Training from scratch: Kendall uncertainty + low SNR.")
@@ -113,7 +113,7 @@ for i in range(NUM_ITERS):
             print(f"    -> Saved (BER={best_ber:.5f})", flush=True)
         else:
             patience += 1
-        if patience >= 15:
+        if patience >= 50:
             print(f"Early stop at iter {i}, best BER: {best_ber:.5f}")
             break
 
