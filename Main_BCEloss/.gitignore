@@ -1,0 +1,9 @@
+# Python cache
+__pycache__/
+
+# Generated weights files (too large for git)
+weights-*
+
+# Generated analysis outputs
+waveforms_ds_scan_bce/
+_*.png
