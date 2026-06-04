@@ -1,24 +1,24 @@
 """
-qQ_Method 端到端物理层模型 (Uncertainty-Weighted Multi-Task 版本)
+qQ_Method 端到端物理层模型 (4-Loss Uncertainty-Weighted 版本)
 
-核心思想：用神经网络学习一个 Q 矩阵，替代传统 OFDM 中的 IFFT/FFT 调制解调。
-        通过 BCE + PAPR 多任务损失，由 Uncertainty Network 根据信道条件
-        自适应调节各损失权重，让模型在不同信道下自动涌现不同形态的波形。
+参考 loss.md 设计, 四项损失联合训练, 由 Uncertainty Network 根据信道条件自适应调节权重:
 
-信号流：
-  比特 → QAM映射 → 资源网格 → Q调制(替代IFFT) → 时域信道 → Q解调(替代FFT) → 均衡 → 解映射 → LLR
+  L_total = exp(-s_bce)·BCE + s_bce
+          + exp(-s_papr)·PAPR + s_papr
+          + exp(-s_oob)·OOB  + s_oob
+          + exp(-s_af)·AF    + s_af
 
-损失函数 (Uncertainty-Guided Multi-Task):
-  total_loss = BCE + λ_papr(rms_ds) · PAPR_SCALE · PAPR
+  其中 s_i = log(σ_i²) 由 UncertaintyModel_4D 根据 RMS 延迟扩展预测:
+    L_BCE:   交叉熵 — 保证通信可靠性, 驱动网络寻找抗多径的调制方式
+    L_PAPR:  峰均比 — 抑制时域高峰值, 防止无脑使用多载波
+    L_OOB:   带外泄漏 — 限制频谱带宽, 防止超宽带短脉冲取巧
+    L_AF:    模糊函数整形 — 鼓励图钉状模糊函数, 逼出 OTFS-like 二维调制
 
-  其中 λ_papr 和 par_lim 由 Uncertainty Network 根据 RMS 延迟扩展预测:
-    - λ_papr ∈ [0.001, 0.1]: 有界自适应 PAPR 权重 (sigmoid 映射)
-    - par_lim ∈ [2, 6] dB: 自适应 PAPR 约束阈值
-    - 平坦信道 → 较大 λ_papr + 较低 par_lim → 更强 PAPR 约束
-    - 色散信道 → 较小 λ_papr + 较高 par_lim → 更弱 PAPR 约束, 优先 BER
-
-  PAPR_SCALE = 100: 将 PAPR 适度放大
-  关键机制：BCE 始终是主要优化目标, PAPR 作为辅助正则项在 BER 相当的波形中优选低 PAPR 的。
+  信道条件通过 Uncertainty Network 间接调节各损失的梯度贡献,
+  使网络在不同信道下自动涌现合适的波形 (TDM → OFDM → OTFS):
+    - 平坦信道: BCE易 → PAPR/OOB 权重相对大 → 选低PAPR单载波 (TDM涌现)
+    - 多径信道: BCE难 → BCE 权重相对大 → 牺牲PAPR换BER → 频域正交 (OFDM涌现)
+    - 双选信道: BCE极难 → AF 权重增大 → 时延-多普勒二维调制 (OTFS涌现)
 """
 
 import tensorflow as tf
@@ -42,7 +42,7 @@ import sionna.phy as sn
 from src.qQ_Method.qQ_creator_layer import qQ_creator_layer, OrtQ_creator_layer, qQ_creator_conv_gru
 from src.qQ_Method.Q_Modulator import Q_Modulator
 from src.qQ_Method.Q_Demodulator import Q_Demodulator
-from src.qQ_Method.qQ_uncertainty_model import UncertaintyModel_1D, UncertaintyModel_2D
+from src.qQ_Method.qQ_uncertainty_model import UncertaintyModel_1D, UncertaintyModel_2D, UncertaintyModel_4D
 from utils.PAPR import emprical_papr
 from utils.General_helpers import make_shift_P
 import matplotlib.pyplot as plt
@@ -79,12 +79,94 @@ def compute_Q_complexity(Q):
     return mean_entropy
 
 
+# ========== OOB (Out-of-Band Emission) Loss ==========
+def compute_oob_loss(x_time, fft_size, scale=1.0):
+    r"""
+    计算带外能量泄漏惩罚 (L_OOB)。
+
+    物理直觉:
+      - 对发送信号做 FFT, 惩罚设定带宽之外的能量
+      - 防止网络面对多径时用超宽带短脉冲取巧
+      - 锁死在有限带宽内, 迫使网络使用正交子载波 (OFDM) 或时延-多普勒网格 (OTFS)
+
+    Args:
+        x_time: [batch, time_samples] 复数时域信号
+        fft_size: int, 带内子载波数 (即有效带宽对应的 FFT 点数)
+        scale: float, 缩放因子
+
+    Returns:
+        oob_loss: [batch] 带外能量占比
+    """
+    x = tf.cast(x_time, tf.complex64)
+    N_total = tf.shape(x)[-1]
+    N_inband = fft_size
+
+    # FFT 并取模平方得到功率谱
+    X_freq = tf.signal.fftshift(tf.signal.fft(x), axes=-1)
+    power = tf.cast(tf.abs(X_freq)**2, tf.float32)
+
+    # 带内区域: 中心 N_inband 个频点
+    start = (N_total - N_inband) // 2
+    end = start + N_inband
+
+    total_power = tf.reduce_sum(power, axis=-1) + 1e-10
+    inband_power = tf.reduce_sum(power[..., start:end], axis=-1)
+    oob_power = total_power - inband_power
+
+    # 归一化带外能量占比
+    oob_loss = oob_power / total_power
+    return scale * oob_loss
+
+
+# ========== AF (Ambiguity Function) Shape Loss ==========
+def compute_af_loss(x_time, scale=1.0):
+    r"""
+    计算模糊函数整形惩罚 (L_AF_Shape)。
+
+    物理直觉:
+      - 模糊函数 A(τ,ν) 衡量波形在时延和多普勒维度的自干扰特性
+      - OTFS 正交基底的理想模糊函数应为"图钉 (Thumbtack)"形状: 能量集中在原点
+      - 惩罚非原点能量, 鼓励稀疏正交的时频二维映射 (如 ISFFT)
+
+    实现: 通过自相关函数近似模糊函数的延迟截面
+      - 理想图钉 → 自相关在 τ≠0 时为 0
+      - 计算高效 (仅需 FFT + IFFT)
+
+    Args:
+        x_time: [batch, time_samples] 复数时域信号
+        scale: float, 缩放因子
+
+    Returns:
+        af_loss: [batch] 非零延迟自相关能量
+    """
+    x = tf.cast(x_time, tf.complex64)
+
+    # Wiener-Khinchin: 自相关 = IFFT(|FFT(x)|²)
+    X_freq = tf.signal.fft(x)
+    psd = tf.cast(tf.abs(X_freq)**2, tf.complex64)
+    R = tf.signal.ifft(psd)                      # [batch, N] 自相关序列
+    R_abs = tf.abs(R)
+
+    # 归一化: R[0] = 1
+    R_norm = R_abs / (R_abs[..., 0:1] + 1e-10)
+
+    # 惩罚非零延迟的自相关能量 (鼓励 impulse-like 自相关 = thumbtack AF)
+    af_loss = tf.reduce_mean(R_norm[..., 1:]**2, axis=-1)
+    return scale * af_loss
+
+
 class qQ_MODEL(keras.Model):
     """
     Q-Modulation 端到端模型
 
     继承 keras.Model，实现自定义的物理层前向传播。
-    训练模式返回 (total_loss, PAR, bce_loss)，评估模式返回 (发送比特, 接收比特)。
+    训练模式返回 (total_loss, ...), 评估模式返回 (发送比特, 接收比特)。
+
+    四项损失 (参考 loss.md):
+      L_BCE  — 交叉熵, 驱动通信可靠性
+      L_PAPR — 峰均比, 抑制波形高峰值
+      L_OOB  — 带外泄漏, 限制频谱带宽
+      L_AF   — 模糊函数整形, 逼出二维调制结构
 
     关键子模块：
       - _qQ_creator_layer:   神经网络，根据信道冲激响应生成 Q 矩阵和 q 向量
@@ -198,10 +280,10 @@ class qQ_MODEL(keras.Model):
         self._Q_modulator = Q_Modulator(self._cyclic_prefix_length)
         self._Q_demodulator = Q_Demodulator(self._fft_size, self._l_min, self._cyclic_prefix_length)
 
-        # 不确定性网络：根据 RMS 延迟扩展预测各损失项的权重
-        # UncertaintyModel_2D: 输出 log_sigma_par, log_sigma_bce, log_sigma_par_lim
+        # 不确定性网络: 根据 RMS 延迟扩展预测四项损失的自适应 log 方差
+        # UncertaintyModel_4D: 输出 logσ²_bce, logσ²_papr, logσ²_oob, logσ²_af
         # UncertaintyModel_1D: 输出 PAPR 约束阈值 par_lim
-        self._UncertaintyModel_bce_par = UncertaintyModel_2D()
+        self._UncertaintyModel_4D = UncertaintyModel_4D()
         self._UncertaintyModel_par_lim = UncertaintyModel_1D()
 
     # @tf.function
@@ -347,20 +429,20 @@ class qQ_MODEL(keras.Model):
             )
             rms_ds = tf.expand_dims(rms_ds, -1)                 # [batch, 1]
 
-        # 不确定性网络: 根据 RMS 延迟扩展预测自适应 PAPR 参数
-        #   思路: 网络根据信道条件调节 PAPR 约束的强度和阈值
-        #   - UncertaintyModel_2D 第3输出 → 自适应 PAPR 权重 λ_papr ∈ [0.001, 0.1]
-        #   - UncertaintyModel_1D → 自适应 PAPR 阈值 par_lim ∈ [2, 6] dB
+        # 不确定性网络: 根据 RMS 延迟扩展预测四项损失的 log 方差
+        #   UncertaintyModel_4D → logσ²_bce, logσ²_papr, logσ²_oob, logσ²_af
+        #   UncertaintyModel_1D → par_lim (自适应 PAPR 约束阈值)
         #
-        #   信道条件影响:
-        #   - 平坦信道 (低 DS): λ_papr 较大, par_lim 较低 → 强 PAPR 约束 → 低峰均比
-        #   - 色散信道 (高 DS): λ_papr 较小, par_lim 较高 → 弱 PAPR 约束 → 优先 BER
+        #   Kendall et al. 2018: L_i = exp(-logσ²_i) · L_i_raw + logσ²_i
+        #   最优 logσ²_i = log(L_i_raw), 此时梯度贡献平衡
         #
-        #   权重有界设计防止梯度不稳定:
-        #   λ_papr = 0.001 + 0.099 * sigmoid(raw) → 始终 ∈ [0.001, 0.1]
-        _, _, raw_lambda_papr = self._UncertaintyModel_bce_par(rms_ds, training=self.training)
-        lambda_papr = 0.001 + 0.099 * tf.sigmoid(raw_lambda_papr)  # [batch], bounded PAPR weight
-        par_lim = self._UncertaintyModel_par_lim(rms_ds, training=self.training)  # [batch], adaptive threshold
+        #   物理直觉 (来自 loss.md):
+        #   - 平坦信道: BCE易 → logσ²_bce小 → BCE权重大 → 同时PAPR/OOB有压力 → 低PAPR单载波
+        #   - 多径信道: BCE难 → logσ²_bce大 → BCE权重降低 → PAPR/OOB/AF权重相对大 → 频域正交
+        #   - 双选信道: BCE极难 → 所有logσ²重新平衡 → AF权重增大 → OTFS-like二维调制
+        log_sigma_bce, log_sigma_papr, log_sigma_oob, log_sigma_af = \
+            self._UncertaintyModel_4D(rms_ds, training=self.training)
+        par_lim = self._UncertaintyModel_par_lim(rms_ds, training=self.training)
 
         # 神经网络根据 CIR 生成 Q 矩阵 (N×N) 和 q 均衡向量 (N 维)
         Q, q = self._qQ_creator_layer(pilots_post_channel, training=self.training)
@@ -411,47 +493,72 @@ class qQ_MODEL(keras.Model):
         llr = self._demapper(r_freq_equalzied, no)
 
         # -------- 步骤 10: 损失计算（仅训练模式） --------
-        # 不确定性引导的多任务损失:
-        #   L_total = BCE + λ_papr(rms_ds) · PAPR_SCALE · PAPR
+        # 四项损失 + 不确定性加权 (Kendall et al., 2018)
         #
-        # 其中 λ_papr 和 par_lim 由 Uncertainty Network 根据 RMS 延迟扩展预测:
-        #   - λ_papr ∈ [0.001, 0.1]: 有界自适应 PAPR 权重, 通过 sigmoid 映射
-        #   - par_lim ∈ [2, 6] dB: 自适应 PAPR 约束阈值
+        #   L_total = Σ_i [ exp(-logσ²_i) · L_i + logσ²_i ]
         #
-        # PAPR_SCALE = 100 将 PAPR loss (~1e-5-1e-2) 适度放大。
+        #   其中 i ∈ {BCE, PAPR, OOB, AF}:
+        #     L_BCE  — 交叉熵 (通信可靠性, 来自 loss.md §1)
+        #     L_PAPR — 峰均比 (抑制高峰值, 来自 loss.md §2)
+        #     L_OOB  — 带外泄漏 (限制带宽, 来自 loss.md §3)
+        #     L_AF   — 模糊函数整形 (逼出OTFS, 来自 loss.md §4)
         #
-        # 设计原理:
-        #   - BCE 始终是主要优化目标 (通信质量第一)
-        #   - PAPR 作为辅助正则项, 在 BER 相当的波形中优选低 PAPR 的
-        #   - 不确定性网络根据信道条件调节 PAPR 约束的强度:
-        #     · 平坦信道 (低 DS): λ_papr 较大, par_lim 较低 → 更强 PAPR 约束
-        #     · 色散信道 (高 DS): λ_papr 较小, par_lim 较高 → 更弱 PAPR 约束, 优先 BER
-        #
-        # 权重有界设计保证训练稳定: λ_papr 始终在 [0.001, 0.1] 内。
+        #   缩放因子将各项损失调整到相近量级, 确保 Kendall 公式的平衡机制正常工作。
+        #   每个 L_i 最优时: exp(-logσ²_i) · L_i ≈ 1, 即 logσ²_i ≈ log(L_i)
 
         if self.training:
-            # PAPR 缩放因子
-            PAPR_SCALE = tf.constant(100.0, dtype=tf.float32)
+            # 损失缩放因子: 将各项损失调整到 ~1 量级
+            SCALE_PAPR = tf.constant(100.0, dtype=tf.float32)
+            SCALE_OOB  = tf.constant(10.0,  dtype=tf.float32)
+            SCALE_AF   = tf.constant(10.0,  dtype=tf.float32)
 
-            # BCE 损失：衡量比特传输质量（通信性能）
+            # -------- L_BCE: 交叉熵 / 误码率驱动 (loss.md §1) --------
+            # 保证通信可靠性, 在多径信道中为压低 BCE 被迫寻找频域正交方案
             bce_loss = tf.squeeze(self.bce(tf.reshape(b, tf.shape(llr)), llr))
             bce_mean = tf.reduce_mean(bce_loss)
 
-            # PAPR 损失：衡量时域信号的峰均比 (使用自适应阈值)
+            # -------- L_PAPR: 峰均比惩罚 (loss.md §2) --------
+            # 防止网络无论什么信道都无脑使用多载波, 像"重力"始终把波形往单载波方向拉扯
             x_time_for_papr = x_time[:, 0, 0, :]  # [batch, time_samples]
-            papr_loss = emprical_papr(x_time_for_papr, T=1, epsilon_P=par_lim)
+            papr_loss = SCALE_PAPR * emprical_papr(x_time_for_papr, T=1, epsilon_P=par_lim)
             papr_mean = tf.reduce_mean(papr_loss)
 
-            # 总损失 = BCE + λ_papr * PAPR_SCALE * PAPR
-            lambda_papr_mean = tf.reduce_mean(lambda_papr)
-            total_loss = bce_mean + lambda_papr_mean * PAPR_SCALE * papr_mean
+            # -------- L_OOB: 带外能量泄漏惩罚 (loss.md §3) --------
+            # 锁死有限带宽, 防止网络学出极窄超短脉冲 (UWB) 来规避多径
+            oob_loss = compute_oob_loss(x_time[:, 0, 0, :], self._fft_size, scale=SCALE_OOB)
+            oob_mean = tf.reduce_mean(oob_loss)
 
-            # 可视化（可选，仅在 visulaize_progress=True 时启用）
+            # -------- L_AF: 模糊函数整形 (loss.md §4) --------
+            # 惩罚非原点模糊函数能量, 逼出类 ISFFT 的二维正交映射 (OTFS)
+            af_loss = compute_af_loss(x_time[:, 0, 0, :], scale=SCALE_AF)
+            af_mean = tf.reduce_mean(af_loss)
+
+            # -------- 不确定性加权 (Kendall et al. 2018) --------
+            # w_i = exp(-logσ²_i): 精度权重
+            # task_loss_i = w_i * L_i + logσ²_i (logσ² 正则项防止权重退化)
+            w_bce  = tf.exp(-log_sigma_bce)
+            w_papr = tf.exp(-log_sigma_papr)
+            w_oob  = tf.exp(-log_sigma_oob)
+            w_af   = tf.exp(-log_sigma_af)
+
+            total_loss = tf.reduce_mean(
+                w_bce  * bce_loss  + log_sigma_bce +
+                w_papr * papr_loss + log_sigma_papr +
+                w_oob  * oob_loss  + log_sigma_oob +
+                w_af   * af_loss   + log_sigma_af
+            )
+
+            # 统计均值（用于日志）
+            ls_bce  = tf.reduce_mean(log_sigma_bce)
+            ls_papr = tf.reduce_mean(log_sigma_papr)
+            ls_oob  = tf.reduce_mean(log_sigma_oob)
+            ls_af   = tf.reduce_mean(log_sigma_af)
+
+            # 可视化（可选）
             if self.visulaize_progress:
-                self.visulaize(h_freq, Q, rms_ds, w_bce=tf.ones_like(lambda_papr),
-                               w_papr=lambda_papr)
+                self.visulaize(h_freq, Q, rms_ds, w_bce=w_bce, w_papr=w_papr)
 
-            return total_loss, bce_mean, papr_mean, lambda_papr_mean
+            return total_loss, bce_mean, papr_mean, oob_mean, af_mean, ls_bce, ls_papr, ls_oob, ls_af
 
         else:
             # 评估模式：硬判决后返回发送/接收比特用于计算 BER
