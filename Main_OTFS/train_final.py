@@ -53,12 +53,11 @@ model_eval = qQ_MODEL_TV(training=False)
 model_eval(2, 40.0)
 
 LR_INITIAL = 0.0005; LR_ALPHA = 0.1; LR_WARMUP = 1000
-NUM_ITERS = 15000
+NUM_ITERS = 30000
 EFFECTIVE_BATCH = BATCH_SIZE * 8
-weights_file = 'weights-qQ_Method_TV_64_10M'
+weights_file = 'weights-qQ_Method_TV_32_10M_ortho'
 
-# Train from scratch — uncertainty model learns to balance BCE/PAPR jointly
-print("Training from scratch: Kendall uncertainty + low SNR.")
+print(f"Training: BCE + ortho (λ={LAMBDA_ORTHO}), SNR=[5,20]dB")
 
 lr_schedule = WarmupCosineDecay(LR_INITIAL, NUM_ITERS, alpha=LR_ALPHA, warmup_steps=LR_WARMUP)
 optimizer = keras.optimizers.Adam(learning_rate=lr_schedule)
@@ -77,9 +76,9 @@ def train_step(batch_size, ebno_min, ebno_max):
     return loss, gnorm
 
 best_ber = 1.0; patience = 0
-TRAIN_SNR_MIN = 0.0   # lower SNR → BER differences amplified
-TRAIN_SNR_MAX = 15.0
-EVAL_SNR = 15.0       # eval at training SNR ceiling
+TRAIN_SNR_MIN = 5.0   # skip extreme low SNR, focus on learnable range
+TRAIN_SNR_MAX = 20.0
+EVAL_SNR = 15.0       # eval at fixed SNR for fair comparison
 print(f"\n{'='*60}")
 print(f"OTFS Training — Kendall uncertainty BCE+PAPR (log_sigma ∈ [-3,3])")
 print(f"  LR: {LR_INITIAL:.0E}→{LR_INITIAL*LR_ALPHA:.0E}, Iters: {NUM_ITERS}")

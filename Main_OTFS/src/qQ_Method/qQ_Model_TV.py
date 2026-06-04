@@ -212,9 +212,17 @@ class qQ_MODEL_TV(keras.Model):
                 self.training_log(total_loss=total_loss, bce_loss=tf.reduce_mean(bce_loss),
                                   PAR=tf.reduce_mean(PAR), llr=llr, bits=b)
             else:
-                total_loss = tf.reduce_mean(bce_loss)
+                # Orthogonal regularization: ‖Q·Q^H − I‖²
+                # Forces Q toward unitary → prevents condition-number explosion
+                # OTFS/OFDM/TDM are all unitary transforms
+                Nq = tf.cast(tf.shape(Q)[-1], Q.dtype)
+                QQH = tf.matmul(Q, tf.linalg.adjoint(Q))
+                I_mat = tf.eye(tf.shape(Q)[-1], dtype=Q.dtype)
+                I_mat = tf.tile(I_mat[None, :, :], [tf.shape(Q)[0], 1, 1])
+                L_ortho = tf.reduce_mean(tf.abs(QQH - I_mat)**2)
+                total_loss = tf.reduce_mean(bce_loss) + LAMBDA_ORTHO * L_ortho
                 self.training_log(total_loss=total_loss, bce_loss=tf.reduce_mean(bce_loss),
-                                  PAR=tf.constant(0.0), llr=llr, bits=b)
+                                  PAR=L_ortho, llr=llr, bits=b)  # reuse PAR slot for L_ortho in logging
             return total_loss
         else:
             b_hat = hard_decisions(llr)
